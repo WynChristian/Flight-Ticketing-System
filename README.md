@@ -1,6 +1,6 @@
-# Flight Ticketing System
-### First project in Computer Programming of BSIT-1A
+# Flight Ticketing System :flight_departure:
+### First project in *Computer Programming*	:computer: of BSIT-1A 	:student:
 
-> Just find the `project.c` file, that's our main file.
+> Just find the `project.c`:open_file_folder: file, that's our main file.
 ---
-> If you're not my partner, please don't copy it. Just take this as an idea for your own project.
+> **If you're not my *partner***, please don't copy it. Just take this as an **idea** for your own project. :grinning:
