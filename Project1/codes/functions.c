@@ -71,22 +71,7 @@ void fprintAmount(float amount, FILE *file)
   return;
 }
 
-void red()
-{
-  printf("\033[1;31m");
-}
-
-void yellow()
-{
-  printf("\033[1;33m");
-}
-
-void reset()
-{
-  printf("\033[0m");
-}
-
-// Prepares the files
+// initializes the files and arrays
 void initialize(SalesReport *report, FILE *transaction,
                 char transactionFile[], FILE *salesreport,
                 char salesreportFile[])
