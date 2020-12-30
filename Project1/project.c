@@ -12,7 +12,7 @@
 #define TOTAL (10)
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
-#define reportFile "asstes/salesReport.txt"
+#define reportFile "assets/salesReport.txt"
 #define themeColor "COLOR 70"
 /* ===================== FUNCTIONS (from functions.c)========================= */
 

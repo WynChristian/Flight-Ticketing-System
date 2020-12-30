@@ -81,7 +81,7 @@ void initialize(SalesReport *report, FILE *transaction,
   fclose(transaction);
 
   salesreport = fopen(salesreportFile, "w");
-  fprintf(salesreport, "%- 11s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
+  fprintf(salesreport, "%- 17s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
   fclose(salesreport);
 
   for (int i = 0; i < TOTAL; i++)
@@ -261,17 +261,17 @@ void printReport(FILE *file, int totalCategories,
   file = fopen(fileName, "a");
 
   printf("\n\tPrinting Flight Ticketing Report...\n\n");
-  printf("%- 11s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
+  printf("%- 17s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
   for (int i = 0; i < totalCategories; i++)
   {
 
     currentTax = reportTrack->reports[i].amount * (*categories)[i].tax;
-    printf("%- 10s %- 10d ", (*categories)[i].country, reportTrack->reports[i].quantity);
+    printf("%- 16s %- 10d ", (*categories)[i].country, reportTrack->reports[i].quantity);
     displayAmount(reportTrack->reports[i].amount);
     displayAmount(currentTax);
     printf("\n");
 
-    fprintf(file, "%- 10s %- 10d ", (*categories)[i].country, reportTrack->reports[i].quantity);
+    fprintf(file, "%- 16s %- 10d ", (*categories)[i].country, reportTrack->reports[i].quantity);
     fprintAmount(reportTrack->reports[i].amount, file);
     fprintAmount(currentTax, file);
     fprintf(file, "\n");
