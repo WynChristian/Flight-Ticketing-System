@@ -278,7 +278,7 @@ void printReport(FILE *file, int totalCategories,
     totalTax += currentTax;
   }
 
-  printf("%- 10s %- 10d ", "TOTAL", reportTrack->totalReport.totalQuantity);
+  printf("%- 16s %- 10d ", "TOTAL", reportTrack->totalReport.totalQuantity);
   displayAmount(reportTrack->totalReport.totalAmount);
   displayAmount(totalTax);
   printf("\n");
