@@ -97,6 +97,7 @@ int getDest(FILE *file, Category *category, int *totalCategories)
 {
   // Read the file and check if its valid; return number (1 / 0)
   int result;
+
   while ((result = fscanf(file, "%s %d %d", &category->country, &category->price, &category->tax)) == 1)
   {
     return getDest(file, category, totalCategories);
@@ -117,7 +118,6 @@ int getDest(FILE *file, Category *category, int *totalCategories)
 } //getDest
 
 // Displays and record the destination
-
 void printAndRecordDest(Category *category, int index,
                         Information (*categories)[])
 {
@@ -131,7 +131,7 @@ void printAndRecordDest(Category *category, int index,
   (*categories)[i].tax = category->tax * 0.01;
 
   // PRINT THE DESTINATION CATEGORIES
-  printf("%- 4d %- 10s ", index, category->country);
+  printf("%- 4d %- 16s ", index, category->country);
   displayAmount((float)category->price);
   printf("\n");
   return;
@@ -175,9 +175,7 @@ void promptUser(CurrentUser *user, int totalCategories)
   scanf("%d", &user->age);
   if (user->age < 0 || user->age > 300)
   {
-
     printf("\n!!Invalid input, please try again!!");
-
     return promptUser(user, totalCategories);
   }
   return;
