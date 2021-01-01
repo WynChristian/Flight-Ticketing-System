@@ -107,7 +107,6 @@ int getDest(FILE *file, Category *category, int *totalCategories)
   else if (result != 3)
   {
     printf("\aError reading data\n");
-    system(themeColor);
     return 0;
   }
   else

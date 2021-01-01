@@ -58,7 +58,7 @@ int main(void)
     return 100;
   }
 
-  // Print the destination category
+  // Print the destination categories
   static int i = 0;
 
   printf("\nFLIGHT DESTINATION\n");
