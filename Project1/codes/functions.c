@@ -1,6 +1,5 @@
 /* HERE ARE THE FUNCTIONS  */
 #define TOTAL (10)
-#define themeColor "COLOR 70"
 
 // For format styling of number with commas
 void displayAmount(float amount)
@@ -26,6 +25,7 @@ void displayAmount(float amount)
   {
     printf("%.2f", amount);
   }
+
   for (int i = 14 - (size + commas); i > 0; i--)
   {
     printf(" ");

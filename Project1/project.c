@@ -10,12 +10,14 @@
 #include "codes/functions.c"
 
 #define TOTAL (10)
+
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
 #define reportFile "assets/salesReport.txt"
-#define themeColor "COLOR 70"
-/* ===================== FUNCTIONS (from functions.c)========================= */
 
+#define themeColor "COLOR 70"
+
+/* ===================== FUNCTIONS (from functions.c)========================= */
 int getDest(FILE *, Category *, int *);
 void printAndRecordDest(Category *, int, Information (*)[]);
 
@@ -69,7 +71,7 @@ int main(void)
   CurrentUser currentUser;
   do
   {
-    //Run(invoke) the necessary functions to call per transactions
+    //Run(invoke) all the necessary functions to call per transactions
     run(Files.appendTransaction, &currentUser,
         totalCategories, &categories,
         &reportTrack, transactionsFile);
