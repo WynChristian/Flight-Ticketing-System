@@ -62,7 +62,7 @@ int main(void)
   // Print the destination categories
   static int i = 0;
 
-  printf("\nFLIGHT DESTINATION pero maliit etits ni joji\n");
+  printf("\nFLIGHT DESTINATION\n");
   while (getDest(Files.getDestinations, &currentCategory, &totalCategories))
   {
     printAndRecordDest(&currentCategory, ++i, &categories);
