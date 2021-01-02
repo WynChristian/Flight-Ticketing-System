@@ -1,7 +1,7 @@
 # Flight Ticketing System :flight_departure:
 ### First project in *Computer Programming*	:computer: of BSIT-1A 	:student:
 ---
-##How to download the files *for computer*
+## How to download the files *for computer*
 1. click the `code`
 
   ![alt text](https://scontent.fmnl17-2.fna.fbcdn.net/v/t1.15752-9/135023651_1074092183015941_1563172731779669106_n.png?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=FnrvCE_brEYAX8tBKR3&_nc_ht=scontent.fmnl17-2.fna&oh=486527436f55eae7a3730f881c566371&oe=60145758 "Code Button")
