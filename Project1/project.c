@@ -16,6 +16,7 @@
 #define reportFile "assets/salesReport.txt"
 
 #define themeColor "COLOR 70"
+#define themeColor1 "COLOR 7C"
 
 /* ===================== FUNCTIONS (from functions.c)========================= */
 int getDest(FILE *, Category *, int *);
@@ -29,7 +30,7 @@ void promptUser(CurrentUser *, int);
 void outputUser(CurrentUser *, Information (*)[]);
 void recordTransaction(FILE *, CurrentUser *, SalesReport *, char[], Information (*)[]);
 
-void printReport(FILE *, int, Information (*)[], SalesReport *, char[]);
+void printReport(FILE *, int, Information (*)[], SalesReport *, char[], char[]);
 
 void initialize(SalesReport *, FILE *, char[], FILE *, char[]);
 
@@ -80,7 +81,7 @@ int main(void)
 
   // display the final data and record it to the file
   printReport(Files.salesReport, totalCategories,
-              &categories, &reportTrack, reportFile);
+              &categories, &reportTrack, reportFile, themeColor1);
 
   return EXIT_SUCCESS;
 }

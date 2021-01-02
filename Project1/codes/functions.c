@@ -64,6 +64,7 @@ void fprintAmount(float amount, FILE *file)
   {
     fprintf(file, "%.f", amount);
   }
+
   for (int i = 14 - (size + commas); i > 0; i--)
   {
     fprintf(file, " ");
@@ -137,7 +138,7 @@ void printAndRecordDest(Category *category, int index,
   return;
 } // printDest
 
-// promp the user of another service
+// promp the user for another service
 int anotherService(void)
 {
   // prompt user for another service
@@ -251,8 +252,11 @@ void run(FILE *append, CurrentUser *currentUser,
 // Displays the sales report and record it in the file
 void printReport(FILE *file, int totalCategories,
                  Information (*categories)[],
-                 SalesReport *reportTrack, char fileName[])
+                 SalesReport *reportTrack, char fileName[], char color[])
 {
+  system("cls");
+  system(color);
+
   float totalTax = 0;
   float currentTax;
   file = fopen(fileName, "a");
