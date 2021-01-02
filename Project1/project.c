@@ -15,8 +15,8 @@
 #define transactionsFile "assets/historyTransaction.txt"
 #define reportFile "assets/salesReport.txt"
 
-#define themeColor "COLOR 70"
-#define themeColor1 "COLOR 7C"
+#define themeColor "COLOR E0"
+#define themeColor1 "COLOR 0E"
 
 /* ===================== FUNCTIONS (from functions.c)========================= */
 int getDest(FILE *, Category *, int *);

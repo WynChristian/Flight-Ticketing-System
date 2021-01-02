@@ -151,6 +151,7 @@ int anotherService(void)
   }
   else if (!strcmp(answer, "N") || !strcmp(answer, "n"))
   {
+    printf("\n\tPrinting Flight Ticketing Report...\n\n");
     return 0;
   }
   else
@@ -261,7 +262,6 @@ void printReport(FILE *file, int totalCategories,
   float currentTax;
   file = fopen(fileName, "a");
 
-  printf("\n\tPrinting Flight Ticketing Report...\n\n");
   printf("%- 17s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
   for (int i = 0; i < totalCategories; i++)
   {
