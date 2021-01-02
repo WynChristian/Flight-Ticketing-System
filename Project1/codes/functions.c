@@ -90,6 +90,8 @@ void initialize(SalesReport *report, FILE *transaction,
     report->reports[i].amount = 0;
     report->reports[i].quantity = 0;
   }
+  report->totalReport.totalQuantity = 0;
+  report->totalReport.totalAmount = 0;
   return;
 }
 
