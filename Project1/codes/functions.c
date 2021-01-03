@@ -1,5 +1,8 @@
 /* HERE ARE THE FUNCTIONS  */
 #define TOTAL (10)
+#define DASH (80)
+#define ASTERISK (75)
+#define SLASH (40)
 
 // For format styling of number with commas
 void displayAmount(float amount)
@@ -26,7 +29,7 @@ void displayAmount(float amount)
     printf("%.2f", amount);
   }
 
-  for (int i = 14 - (size + commas); i > 0; i--)
+  for (int i = 17 - (size + commas); i > 0; i--)
   {
     printf(" ");
   }
@@ -90,8 +93,6 @@ void initialize(SalesReport *report, FILE *transaction,
     report->reports[i].amount = 0;
     report->reports[i].quantity = 0;
   }
-  report->totalReport.totalQuantity = 0;
-  report->totalReport.totalAmount = 0;
   return;
 }
 
@@ -134,9 +135,9 @@ void printAndRecordDest(Category *category, int index,
   (*categories)[i].tax = category->tax * 0.01;
 
   // PRINT THE DESTINATION CATEGORIES
-  printf("%- 4d %- 16s ", index, category->country);
+  printf("\t\t%- 4d \t%- 16s \t", index, category->country);
   displayAmount((float)category->price);
-  printf("\n");
+  printf("\n\n");
   return;
 } // printDest
 
@@ -149,6 +150,10 @@ int anotherService(void)
   scanf("%s", answer);
   if (!strcmp(answer, "Y") || !strcmp(answer, "y"))
   {
+    printf("\n");
+    for (int astrk = 0; astrk < ASTERISK; astrk++)
+        printf("*");
+    printf("\n");
     return 1;
   }
   else if (!strcmp(answer, "N") || !strcmp(answer, "n"))
@@ -264,15 +269,19 @@ void printReport(FILE *file, int totalCategories,
   float currentTax;
   file = fopen(fileName, "a");
 
-  printf("%- 17s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
+  for (int slsh = 0; slsh < SLASH; slsh++)
+        printf("/\\");
+  printf("\n");
+
+  printf("\n\t%- 17s \t%- 9s \t%- 13s \t%s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
   for (int i = 0; i < totalCategories; i++)
   {
 
     currentTax = reportTrack->reports[i].amount * (*categories)[i].tax;
-    printf("%- 16s %- 10d ", (*categories)[i].country, reportTrack->reports[i].quantity);
+    printf("\t%- 16s \t%- 10d \t", (*categories)[i].country, reportTrack->reports[i].quantity);
     displayAmount(reportTrack->reports[i].amount);
     displayAmount(currentTax);
-    printf("\n");
+    printf("\n\n");
 
     fprintf(file, "%- 16s %- 10d ", (*categories)[i].country, reportTrack->reports[i].quantity);
     fprintAmount(reportTrack->reports[i].amount, file);
@@ -281,14 +290,40 @@ void printReport(FILE *file, int totalCategories,
     totalTax += currentTax;
   }
 
-  printf("%- 16s %- 10d ", "TOTAL", reportTrack->totalReport.totalQuantity);
+  for (int dash = 0; dash < DASH; dash++)
+    printf("-");
+  printf("\n\n");
+
+  printf("\t%- 16s \t%- 10d \t", "TOTAL", reportTrack->totalReport.totalQuantity);
   displayAmount(reportTrack->totalReport.totalAmount);
   displayAmount(totalTax);
+  printf("\n\n");
+
+  for (int slsh = 0; slsh < SLASH; slsh++)
+        printf("/\\");
   printf("\n");
+
+  printf("\n\n\nPrepared by: Wyn Christian Rebanal and George Vincent De Vera\n");
+  char temp [100];
+  time_t current_time = time (NULL);
+  struct tm *tm = localtime (&current_time);
+  strftime (temp, sizeof (temp), "%c", tm);
+  printf("\nDate and Time Prepared: ");
+  printf("%s\n\n", temp);
+
   fclose(file);
   return;
 
 } //printReport
+
+// Prints a border of equal sign using loop
+void equalSign (int equals)
+{
+    for (int eql = 0; eql < equals; eql++)
+        printf("=");
+    printf("\n");
+    return;
+}
 
 // ONE STEP AT A TIME!
 // "A journey of a thousand miles starts from the one small step"

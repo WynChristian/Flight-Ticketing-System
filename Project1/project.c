@@ -1,15 +1,22 @@
+/* This program demonstrates a typical flight ticketing system.
+    Programmed by: Wyn Christian Rebanal
+                   George Vincent De Vera
+    Date Edited: January 2, 2021
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <conio.h>
+#include <time.h>
 
 // import the external codes
 #include "codes/structs.h"
 #include "codes/functions.c"
 
 #define TOTAL (10)
+#define EQUALS (75)
 
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
@@ -37,6 +44,8 @@ void initialize(SalesReport *, FILE *, char[], FILE *, char[]);
 void displayAmount(float);
 void fprintAmount(float, FILE *);
 
+void equalSign(int);
+
 /* ===============================MAIN PROGRAM========================= */
 int main(void)
 {
@@ -62,11 +71,15 @@ int main(void)
   // Print the destination categories
   static int i = 0;
 
-  printf("\nFLIGHT DESTINATION\n");
+  equalSign(EQUALS);
+
+  printf("\n\t\t\tFLIGHT DESTINATION\t\t\n\n");
   while (getDest(Files.getDestinations, &currentCategory, &totalCategories))
   {
     printAndRecordDest(&currentCategory, ++i, &categories);
   }
+
+  equalSign(EQUALS);
 
   // Prompt the user, display and record the transaction, and track the final data
   CurrentUser currentUser;
