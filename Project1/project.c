@@ -17,6 +17,7 @@
 
 #define TOTAL (10)
 #define EQUALS (75)
+#define TABS (2)
 
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
@@ -43,9 +44,10 @@ void initialize(SalesReport *, FILE *, char[], FILE *, char[]);
 
 void displayAmount(float);
 void fprintAmount(float, FILE *);
-
-void equalSign(int);
-
+void equalSign(int, int);
+void printSlash(int);
+void printBreakLine(int);
+void printLineAsterisk(int);
 /* ===============================MAIN PROGRAM========================= */
 int main(void)
 {
@@ -71,7 +73,7 @@ int main(void)
   // Print the destination categories
   static int i = 0;
 
-  equalSign(EQUALS);
+  equalSign(EQUALS, TABS);
 
   printf("\n\t\t\tFLIGHT DESTINATION\t\t\n\n");
   while (getDest(Files.getDestinations, &currentCategory, &totalCategories))
@@ -79,7 +81,7 @@ int main(void)
     printAndRecordDest(&currentCategory, ++i, &categories);
   }
 
-  equalSign(EQUALS);
+  equalSign(EQUALS, TABS);
 
   // Prompt the user, display and record the transaction, and track the final data
   CurrentUser currentUser;
@@ -99,4 +101,4 @@ int main(void)
   return EXIT_SUCCESS;
 }
 
-// Reminders: Don't procrastinate! Put first things first!
+// Reminders: Don't procrastinate! Put first things first! aye

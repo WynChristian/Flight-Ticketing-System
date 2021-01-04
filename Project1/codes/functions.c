@@ -3,8 +3,9 @@
 #define DASH (80)
 #define ASTERISK (75)
 #define SLASH (40)
+#define TABS (2)
 
-// For format styling of number with commas
+// ----------- FORMAT STYLING --------------
 void displayAmount(float amount)
 {
   char stringPayment[16];
@@ -75,6 +76,46 @@ void fprintAmount(float amount, FILE *file)
   return;
 }
 
+void printSlash(int tab)
+{
+  for (int i = 0; i < tab; i++)
+    printf("\t");
+
+  for (int slsh = 0; slsh < SLASH; slsh++)
+    printf("/\\");
+
+  printf("\n");
+  return;
+}
+
+void printBreakLine(int tab)
+{
+  for (int i = 0; i < tab; i++)
+    printf("\t");
+  for (int dash = 0; dash < DASH; dash++)
+    printf("-");
+  printf("\n\n");
+}
+
+void equalSign(int equals, int tab)
+{
+  for (int i = 0; i < tab; i++)
+    printf("\t");
+  for (int eql = 0; eql < equals; eql++)
+    printf("=");
+  printf("\n");
+  return;
+}
+
+void printLineAsterisk(int tab)
+{
+  printf("\n");
+  for (int i = 0; i < tab; i++)
+    printf("\t");
+  for (int astrk = 0; astrk < ASTERISK; astrk++)
+    printf("*");
+  printf("\n");
+}
 // initializes the files and arrays
 void initialize(SalesReport *report, FILE *transaction,
                 char transactionFile[], FILE *salesreport,
@@ -135,7 +176,7 @@ void printAndRecordDest(Category *category, int index,
   (*categories)[i].tax = category->tax * 0.01;
 
   // PRINT THE DESTINATION CATEGORIES
-  printf("\t\t%- 4d \t%- 16s \t", index, category->country);
+  printf("\t\t\t%- 4d \t%- 16s \t", index, category->country);
   displayAmount((float)category->price);
   printf("\n\n");
   return;
@@ -145,15 +186,12 @@ void printAndRecordDest(Category *category, int index,
 int anotherService(void)
 {
   // prompt user for another service
-  printf("\n\nAnother Service (Y/N)?: ");
+  printf("\n\n\t\t\tAnother Service (Y/N)?: ");
   char answer[1];
   scanf("%s", answer);
   if (!strcmp(answer, "Y") || !strcmp(answer, "y"))
   {
-    printf("\n");
-    for (int astrk = 0; astrk < ASTERISK; astrk++)
-        printf("*");
-    printf("\n");
+    printLineAsterisk(TABS);
     return 1;
   }
   else if (!strcmp(answer, "N") || !strcmp(answer, "n"))
@@ -173,14 +211,14 @@ int anotherService(void)
 void promptUser(CurrentUser *user, int totalCategories)
 {
   // prompt user to get input data
-  printf("\n%- 30s: ", "Enter your flight destination");
+  printf("\n\t\t\t\t%- 30s: ", "Enter your flight destination");
   scanf("%d", &user->destination);
   if (user->destination > totalCategories || user->destination < 1)
   {
-    printf("\n!!Invalid input, please try again!!");
+    printf("\n\t\t\t!!Invalid input, please try again!!");
     return promptUser(user, totalCategories);
   }
-  printf("%- 30s: ", "Enter your age");
+  printf("\t\t\t\t%- 30s: ", "Enter your age");
   scanf("%d", &user->age);
   if (user->age < 0 || user->age > 300)
   {
@@ -214,9 +252,9 @@ void outputUser(CurrentUser *user, Information (*categories)[])
     user->payment = destination.price;
   }
 
-  printf("\n\n%- 13s: Php ", "Ticket amount");
+  printf("\n\n\t\t\t\t%- 13s: Php ", "Ticket amount");
   displayAmount(user->payment);
-  printf("\n%- 13s: Php ", "Travel tax");
+  printf("\n\t\t\t\t%- 13s: Php ", "Travel tax");
   displayAmount((user->payment) * destination.tax);
 
   return;
@@ -269,16 +307,16 @@ void printReport(FILE *file, int totalCategories,
   float currentTax;
   file = fopen(fileName, "a");
 
-  for (int slsh = 0; slsh < SLASH; slsh++)
-        printf("/\\");
-  printf("\n");
+  //some UX design
+  printf("\n\n\n");
+  printSlash(TABS);
 
-  printf("\n\t%- 17s \t%- 9s \t%- 13s \t%s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
+  printf("\n\t\t\t%- 17s \t%- 9s \t%- 13s \t%s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
   for (int i = 0; i < totalCategories; i++)
   {
 
     currentTax = reportTrack->reports[i].amount * (*categories)[i].tax;
-    printf("\t%- 16s \t%- 10d \t", (*categories)[i].country, reportTrack->reports[i].quantity);
+    printf("\t\t\t%- 16s \t%- 10d \t", (*categories)[i].country, reportTrack->reports[i].quantity);
     displayAmount(reportTrack->reports[i].amount);
     displayAmount(currentTax);
     printf("\n\n");
@@ -290,40 +328,34 @@ void printReport(FILE *file, int totalCategories,
     totalTax += currentTax;
   }
 
-  for (int dash = 0; dash < DASH; dash++)
-    printf("-");
-  printf("\n\n");
+  printBreakLine(TABS);
 
-  printf("\t%- 16s \t%- 10d \t", "TOTAL", reportTrack->totalReport.totalQuantity);
+  printf("\t\t\t%- 16s \t%- 10d \t", "TOTAL", reportTrack->totalReport.totalQuantity);
   displayAmount(reportTrack->totalReport.totalAmount);
   displayAmount(totalTax);
   printf("\n\n");
 
-  for (int slsh = 0; slsh < SLASH; slsh++)
-        printf("/\\");
-  printf("\n");
+  printSlash(TABS);
 
-  printf("\n\n\nPrepared by: Wyn Christian Rebanal and George Vincent De Vera\n");
-  char temp [100];
-  time_t current_time = time (NULL);
-  struct tm *tm = localtime (&current_time);
-  strftime (temp, sizeof (temp), "%c", tm);
-  printf("\nDate and Time Prepared: ");
+  //Prints the credits
+  printf("\n\n\n\t\tPrepared by: \n");
+  printf("\t\t\tWyn Christian Rebanal & \n");
+  printf("\t\t\tGeorge Vincent De Vera\n");
+  char temp[100];
+  time_t current_time = time(NULL);
+  struct tm *tm = localtime(&current_time);
+  strftime(temp, sizeof(temp), "%c", tm);
+  printf("\n\t\tDate and Time Prepared: ");
   printf("%s\n\n", temp);
 
   fclose(file);
+
+  scanf("%s", &temp);
+  system("cls");
+  printf("\n\t\t Thank you for using the program !!!\n\n");
   return;
 
 } //printReport
-
-// Prints a border of equal sign using loop
-void equalSign (int equals)
-{
-    for (int eql = 0; eql < equals; eql++)
-        printf("=");
-    printf("\n");
-    return;
-}
 
 // ONE STEP AT A TIME!
 // "A journey of a thousand miles starts from the one small step"
