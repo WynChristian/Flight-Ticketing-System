@@ -4,6 +4,7 @@
     Date Edited: January 2, 2021
 */
 
+// Header files
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,14 +16,17 @@
 #include "codes/structs.h"
 #include "codes/functions.c"
 
+// Some constant variables
 #define TOTAL (10)
 #define EQUALS (75)
 #define TABS (2)
 
+//File path
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
 #define reportFile "assets/salesReport.txt"
 
+// Color Theme for the program
 #define themeColor "COLOR E0"
 #define themeColor1 "COLOR 0E"
 
@@ -48,6 +52,7 @@ void equalSign(int, int);
 void printSlash(int);
 void printBreakLine(int);
 void printLineAsterisk(int);
+
 /* ===============================MAIN PROGRAM========================= */
 int main(void)
 {
@@ -59,6 +64,7 @@ int main(void)
   Information categories[TOTAL]; // To track the informations of destinations with an array
   SalesReport reportTrack;       // To track the final data while the program executing
 
+  //-------------- PHASE 1 ---------------
   // Prepare the files for the user
   initialize(&reportTrack, Files.appendTransaction, transactionsFile, Files.salesReport, reportFile);
 
@@ -83,6 +89,7 @@ int main(void)
 
   equalSign(EQUALS, TABS);
 
+  //-------------- PHASE 2 ---------------
   // Prompt the user, display and record the transaction, and track the final data
   CurrentUser currentUser;
   do
@@ -94,7 +101,8 @@ int main(void)
 
   } while (anotherService());
 
-  // display the final data and record it to the file
+  //-------------- PHASE 3 ---------------
+  // Display the final data and record it to the file
   printReport(Files.salesReport, totalCategories,
               &categories, &reportTrack, reportFile, themeColor1);
 

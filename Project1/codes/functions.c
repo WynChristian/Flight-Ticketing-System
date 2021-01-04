@@ -1,4 +1,5 @@
 /* HERE ARE THE FUNCTIONS  */
+
 #define TOTAL (10)
 #define DASH (80)
 #define ASTERISK (75)
@@ -116,6 +117,8 @@ void printLineAsterisk(int tab)
     printf("*");
   printf("\n");
 }
+// ----------- FORMAT STYLING --------------
+
 // initializes the files and arrays
 void initialize(SalesReport *report, FILE *transaction,
                 char transactionFile[], FILE *salesreport,
@@ -137,7 +140,8 @@ void initialize(SalesReport *report, FILE *transaction,
   return;
 }
 
-// for getting the destinations
+// ------------   DESTINATION CATEGORIES ---------------
+// For getting the destinations
 int getDest(FILE *file, Category *category, int *totalCategories)
 {
   // Read the file and check if its valid; return number (1 / 0)
@@ -182,7 +186,10 @@ void printAndRecordDest(Category *category, int index,
   return;
 } // printDest
 
-// promp the user for another service
+// ------------   DESTINATION CATEGORIES ---------------
+
+// ------------------ TRANSACTION -----------------------
+// Prompt the user for another service
 int anotherService(void)
 {
   // prompt user for another service
@@ -207,7 +214,7 @@ int anotherService(void)
 
 } // anotherService
 
-// prompt the user for transaction
+// Prompt the user for transaction
 void promptUser(CurrentUser *user, int totalCategories)
 {
   // prompt user to get input data
@@ -228,7 +235,7 @@ void promptUser(CurrentUser *user, int totalCategories)
   return;
 } // promptUser
 
-// displays the transaction
+// Displays the transaction
 void outputUser(CurrentUser *user, Information (*categories)[])
 {
   int age = user->age;
@@ -260,7 +267,7 @@ void outputUser(CurrentUser *user, Information (*categories)[])
   return;
 } // ouputUser
 
-// records the transaction in file
+// Records the transaction in file
 void recordTransaction(FILE *file, CurrentUser *user,
                        SalesReport *reportTrack, char fileName[],
                        Information (*categories)[])
@@ -283,7 +290,6 @@ void recordTransaction(FILE *file, CurrentUser *user,
   return;
 
 } // recordTransaction
-
 // Run all the necessary functions for the program
 void run(FILE *append, CurrentUser *currentUser,
          int totalCategories, Information (*categories)[],
@@ -295,6 +301,9 @@ void run(FILE *append, CurrentUser *currentUser,
   return;
 }
 
+// ------------------ TRANSACTION -----------------------
+
+// ------------------ SALES REPORT -----------------------
 // Displays the sales report and record it in the file
 void printReport(FILE *file, int totalCategories,
                  Information (*categories)[],
@@ -356,6 +365,8 @@ void printReport(FILE *file, int totalCategories,
   return;
 
 } //printReport
+
+// ------------------ SALES REPORT -----------------------
 
 // ONE STEP AT A TIME!
 // "A journey of a thousand miles starts from the one small step"
