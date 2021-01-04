@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
+#include <assert.h>1
 #include <conio.h>
 #include <time.h>
 
@@ -17,7 +17,7 @@
 #include "codes/functions.c"
 
 // Some constant variables
-#define TOTAL (10)
+#define TOTAL (100)
 #define EQUALS (75)
 #define TABS (2)
 

@@ -2,7 +2,7 @@
 /// Data type siya men na pinagsama samang ibang data type
 /// The way na a-access yung structs is by dot (.) or arrow (->) {kung pointer struct siya}
 /// like "reportTrack.totalReport;"
-#define TOTAL (10)
+#define TOTAL (100)
 
 /// yung typedef naman ay pang simplifyer lang siya
 /// para mas maikli ang pag initialize ng structs

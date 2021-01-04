@@ -1,6 +1,6 @@
 /* HERE ARE THE FUNCTIONS  */
 
-#define TOTAL (10)
+#define TOTAL (100)
 #define DASH (80)
 #define ASTERISK (75)
 #define SLASH (40)

@@ -1,5 +1,17 @@
 Flight            Quantity  Amount        Travel tax
 
 USA               1         10,000        1,000         
-France            1         5,000         250           
+France            0         0.00          0.00          
+China             0         0.00          0.00          
+USA               0         0.00          0.00          
+France            0         0.00          0.00          
+China             0         0.00          0.00          
+USA               0         0.00          0.00          
+France            0         0.00          0.00          
+China             0         0.00          0.00          
+USA               0         0.00          0.00          
+France            0         0.00          0.00          
+China             0         0.00          0.00          
+USA               0         0.00          0.00          
+France            0         0.00          0.00          
 China             0         0.00          0.00          
