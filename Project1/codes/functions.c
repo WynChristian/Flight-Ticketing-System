@@ -1,6 +1,5 @@
 /* HERE ARE THE FUNCTIONS  */
 
-#define TOTAL (100)
 #define DASH (80)
 #define ASTERISK (75)
 #define SLASH (40)
@@ -52,7 +51,7 @@ void fprintAmount(float amount, FILE *file)
     for (int i = 0; i < size; i++)
     {
       int index = size - i;
-      if (index % 3 == 0 && index != 0 /* && i < size - 3 && i != 0 */)
+      if (index % 3 == 0 && index != 0 && index < size)
       {
         fprintf(file, ",");
         commas++;
@@ -122,7 +121,7 @@ void printLineAsterisk(int tab)
 // initializes the files and arrays
 void initialize(SalesReport *report, FILE *transaction,
                 char transactionFile[], FILE *salesreport,
-                char salesreportFile[])
+                char salesreportFile[], int total)
 {
   transaction = fopen(transactionFile, "w");
   fprintf(transaction, "%- 13s %- 6s %s\n", "Destination", "Age", "Sales Amount");
@@ -132,7 +131,7 @@ void initialize(SalesReport *report, FILE *transaction,
   fprintf(salesreport, "%- 17s %- 9s %- 13s %s\n\n", "Flight", "Quantity", "Amount", "Travel tax");
   fclose(salesreport);
 
-  for (int i = 0; i < TOTAL; i++)
+  for (int i = 0; i < total; i++)
   {
     report->reports[i].amount = 0;
     report->reports[i].quantity = 0;
@@ -290,6 +289,7 @@ void recordTransaction(FILE *file, CurrentUser *user,
   return;
 
 } // recordTransaction
+
 // Run all the necessary functions for the program
 void run(FILE *append, CurrentUser *currentUser,
          int totalCategories, Information (*categories)[],
@@ -336,6 +336,7 @@ void printReport(FILE *file, int totalCategories,
     fprintf(file, "\n");
     totalTax += currentTax;
   }
+  fclose(file);
 
   printBreakLine(TABS);
 
@@ -347,6 +348,7 @@ void printReport(FILE *file, int totalCategories,
   printSlash(TABS);
 
   //Prints the credits
+  sleep(2);
   printf("\n\n\n\t\tPrepared by: \n");
   printf("\t\t\tWyn Christian Rebanal & \n");
   printf("\t\t\tGeorge Vincent De Vera\n");
@@ -357,11 +359,7 @@ void printReport(FILE *file, int totalCategories,
   printf("\n\t\tDate and Time Prepared: ");
   printf("%s\n\n", temp);
 
-  fclose(file);
-
-  scanf("%s", &temp);
-  system("cls");
-  printf("\n\t\t Thank you for using the program !!!\n\n");
+  sleep(10);
   return;
 
 } //printReport

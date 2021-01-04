@@ -1,17 +1,5 @@
 Destination  Price per Destination  Travel tax
 
-USA          10000                  10%
-France       5000                   5%
-China        8500                   7%
-USA          10000                  10%
-France       5000                   5%
-China        8500                   7%
-USA          10000                  10%
-France       5000                   5%
-China        8500                   7%
-USA          10000                  10%
-France       5000                   5%
-China        8500                   7%
-USA          10000                  10%
+USA          100000                 10%
 France       5000                   5%
 China        8500                   7%

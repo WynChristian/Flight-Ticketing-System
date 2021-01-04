@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>1
+#include <assert.h>
 #include <conio.h>
 #include <time.h>
 
@@ -44,7 +44,7 @@ void recordTransaction(FILE *, CurrentUser *, SalesReport *, char[], Information
 
 void printReport(FILE *, int, Information (*)[], SalesReport *, char[], char[]);
 
-void initialize(SalesReport *, FILE *, char[], FILE *, char[]);
+void initialize(SalesReport *, FILE *, char[], FILE *, char[], int);
 
 void displayAmount(float);
 void fprintAmount(float, FILE *);
@@ -65,8 +65,8 @@ int main(void)
   SalesReport reportTrack;       // To track the final data while the program executing
 
   //-------------- PHASE 1 ---------------
-  // Prepare the files for the user
-  initialize(&reportTrack, Files.appendTransaction, transactionsFile, Files.salesReport, reportFile);
+  // Prepare the files for the user hello
+  initialize(&reportTrack, Files.appendTransaction, transactionsFile, Files.salesReport, reportFile, TOTAL);
 
   // Open and check the file
   Files.getDestinations = fopen(destinationsFile, "r");
