@@ -75,7 +75,7 @@ int main(void)
 
   equalSign(EQUALS, TABS);
 
-  printf("\n\t\t\tFLIGHT DESTINATION\t\t\n\n");
+  printf("\n\t\t\t\t\tFLIGHT DESTINATION\t\t\n\n");
   while (getDest(Files.getDestinations, &currentCategory, &totalCategories))
   {
     printAndRecordDest(&currentCategory, ++i, &categories);
