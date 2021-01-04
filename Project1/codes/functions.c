@@ -47,7 +47,6 @@ void fprintAmount(float amount, FILE *file)
 
   if (amount >= 1000)
   {
-
     for (int i = 0; i < size; i++)
     {
       int index = size - i;
@@ -340,6 +339,7 @@ void printReport(FILE *file, int totalCategories,
 
   printBreakLine(TABS);
 
+  //Print the 'TOTAL" category
   printf("\t\t\t%- 16s \t%- 10d \t", "TOTAL", reportTrack->totalReport.totalQuantity);
   displayAmount(reportTrack->totalReport.totalAmount);
   displayAmount(totalTax);

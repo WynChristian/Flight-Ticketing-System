@@ -59,7 +59,7 @@ int main(void)
   system(themeColor);
 
   Documents Files;          // Files
-  Category currentCategory; // For getting information
+  Category currentCategory; // For getting information per transaction
   static unsigned int totalCategories = 0;
   Information categories[TOTAL]; // To track the informations of destinations with an array
   SalesReport reportTrack;       // To track the final data while the program executing
@@ -109,4 +109,4 @@ int main(void)
   return EXIT_SUCCESS;
 }
 
-// Reminders: Don't procrastinate! Put first things first! aye
+// Reminders: Don't procrastinate! Put first things first!
