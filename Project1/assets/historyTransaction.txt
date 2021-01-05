@@ -1,1 +1,7 @@
 Destination   Age    Sales Amount
+
+USA           19     100,000       
+France        19     5,000         
+France        0      0.00          
+France        62     4,000         
+France        5      4,500         

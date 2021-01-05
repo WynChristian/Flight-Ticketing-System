@@ -77,9 +77,11 @@ void fprintAmount(float amount, FILE *file)
 
 void printSlash(int tab)
 {
+  // Print whitespaces
   for (int i = 0; i < tab; i++)
     printf("\t");
 
+  // Print slashes
   for (int slsh = 0; slsh < SLASH; slsh++)
     printf("/\\");
 
@@ -89,8 +91,11 @@ void printSlash(int tab)
 
 void printBreakLine(int tab)
 {
+  // Print whitespaces
   for (int i = 0; i < tab; i++)
     printf("\t");
+
+  // Print dashes
   for (int dash = 0; dash < DASH; dash++)
     printf("-");
   printf("\n\n");
@@ -98,8 +103,11 @@ void printBreakLine(int tab)
 
 void equalSign(int equals, int tab)
 {
+  // Print whitespaces
   for (int i = 0; i < tab; i++)
     printf("\t");
+
+  // Print equal signs
   for (int eql = 0; eql < equals; eql++)
     printf("=");
   printf("\n");
@@ -206,7 +214,7 @@ int anotherService(void)
   }
   else
   {
-    printf("\nInvalid input, Please try again");
+    printf("\n\t\t\t!!Invalid input, Please try again!!");
     return anotherService();
   }
 
@@ -227,7 +235,7 @@ void promptUser(CurrentUser *user, int totalCategories)
   scanf("%d", &user->age);
   if (user->age < 0 || user->age > 300)
   {
-    printf("\n!!Invalid input, please try again!!");
+    printf("\n\t\t\t!!Invalid input, please try again!!");
     return promptUser(user, totalCategories);
   }
   return;
@@ -248,7 +256,7 @@ void outputUser(CurrentUser *user, Information (*categories)[])
   {
     user->payment = destination.price * (float)0.90;
   }
-  else if (age > 60)
+  else if (age >= 60)
   {
     user->payment = destination.price * (float)0.80;
   }
