@@ -2,7 +2,6 @@
 /// Data type siya men na pinagsama samang ibang data type
 /// The way na a-access yung structs is by dot (.) or arrow (->) {kung pointer struct siya}
 /// like "reportTrack.totalReport;"
-#define TOTAL (100)
 
 /// yung typedef naman ay pang simplifyer lang siya
 /// para mas maikli ang pag initialize ng structs
@@ -13,6 +12,8 @@ typedef struct info Information;        // For database of current program
 typedef struct currentUser CurrentUser; // For current user's info
 typedef struct salesReport SalesReport; // For sales report
 typedef struct files Documents;         // For files
+typedef struct report Report;
+typedef struct totalReport TotalReport;
 
 struct category
 {
@@ -44,14 +45,10 @@ struct totalReport
 
 struct report
 {
+  char country[100];
   unsigned int quantity;
-  unsigned int amount;
-};
-
-struct salesReport
-{
-  struct report reports[TOTAL];
-  struct totalReport totalReport;
+  float amount;
+  float tax;
 };
 
 struct files

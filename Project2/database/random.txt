@@ -1,6 +1,7 @@
-COUNTRY     tax
+COUNTRY     tax   total
 
-age        price
-age        price
-age        price
+age(int)        price(float)
+age(int)        price(float)
+age(int)        price(float)
+age(int)        price(float)
 ...

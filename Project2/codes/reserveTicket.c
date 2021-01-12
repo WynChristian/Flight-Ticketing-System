@@ -241,7 +241,7 @@ int checkFilePath(char *sampleFilePath)
 void storeData(char *sampleFilePath, char *currentCountry, float currentTax, database (*currentData)[], int total)
 {
   FILE *currentDataFile = fopen(sampleFilePath, "w");
-  fprintf(currentDataFile, "%-10s %.f\n\n", currentCountry, currentTax);
+  fprintf(currentDataFile, "%-10s %7.f %d\n\n", currentCountry, currentTax, total);
   for (int i = 0; i < total; i++)
   {
     fprintf(currentDataFile, "%-7d %10.2f\n", (*currentData)[i].age, (*currentData)[i].price);

@@ -137,7 +137,6 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
     scanf("%s", &someBuffer);
     checkBuffer = false;
   }
-
   int code;
   int result;
   printf("\n\nEnter destination code(000 by their index): ");
@@ -315,5 +314,17 @@ void manageDestination(FILE *file, Information (*arrayCategories)[], int *total)
   default:
     puts("Error, invalid input. try again");
     manageDestination(file, arrayCategories, total);
+  }
+}
+
+void initialize(Information (*arrayCategories)[], Report (*arrayReports)[], int *total, int *totalCountry)
+{
+  for (int i = 0; i < *total; i++)
+  {
+    strcpy((*arrayReports)[i].country, (*arrayCategories)[i].country);
+    (*arrayReports)[i].quantity = 0;
+    (*arrayReports)[i].amount = 0;
+    (*arrayReports)[i].tax = 0;
+    *totalCountry += 1;
   }
 }
