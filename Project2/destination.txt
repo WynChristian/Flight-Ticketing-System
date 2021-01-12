@@ -1,0 +1,5 @@
+Destination     Price per Destination Travel tax
+
+USA               100000          10%
+France            23432           9%
+China             32132           8%
