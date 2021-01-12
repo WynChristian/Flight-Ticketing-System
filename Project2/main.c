@@ -38,6 +38,7 @@ void reserveTicket(FILE *file, Information (*arrayCategories)[], int *total);
 
 int main(void)
 {
+
   FILE *destinationFile;
   FILE *database;
   Category currentCategory;
