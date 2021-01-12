@@ -55,7 +55,6 @@ void readAllDest(FILE *file, Category *category, int *total, Information (*categ
   while (scanDest(file, category, total))
   {
     recordDest(category, ++i, categories);
-    printf("%s %03d\n", ((*categories)[i - 1]).country, *total);
   }
 
   return;

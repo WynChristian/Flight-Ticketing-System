@@ -1,5 +1,13 @@
 #define TOTALMEMBERS (16)
 
+typedef struct database database;
+
+struct database
+{
+  int age;
+  int price;
+};
+
 void propmtUserAdultMembers(int *result, int *answer, int *members)
 {
   *result = 0;
@@ -29,7 +37,8 @@ void propmtUserAdultMembers(int *result, int *answer, int *members)
   *members += *answer;
   return;
 }
-void propmtUserAdultAges(int *result, int *answer, int *members)
+
+void propmtUserAdultAges(int *result, int *answer, int *members, database (*datas)[])
 {
   for (int i = 0; i < *members; i++)
   {
@@ -52,8 +61,10 @@ void propmtUserAdultAges(int *result, int *answer, int *members)
       printf("\nEnter age: ");
       *result = scanf("%d", answer);
     }
+    (*datas)[i].age = *answer;
   }
 }
+
 void propmtUserChildren(int *result, int *answer, int *members)
 {
   if (*members == TOTALMEMBERS)
@@ -92,10 +103,13 @@ void propmtUserChildren(int *result, int *answer, int *members)
   *members += *answer;
 }
 
-void propmtUserChildrenAges(int *result, int *answer, int *members)
+void propmtUserChildrenAges(int *result, int *answer, int *members, database (*datas)[])
 {
+  if (*members == TOTALMEMBERS)
+    return;
+
   int totalChild = *answer;
-  for (int i = 0; i < totalChild; i++)
+  for (int i = 0, j = *members; i < totalChild; i++, j++)
   {
     *answer = 0;
     result = 0;
@@ -116,6 +130,8 @@ void propmtUserChildrenAges(int *result, int *answer, int *members)
       printf("\nEnter age: ");
       *result = scanf("%d", answer);
     }
+
+    (*datas)[i].age = *answer;
   }
 }
 
@@ -153,16 +169,16 @@ void reserveTicket(FILE *file, Information (*arrayCategories)[], int *total)
 
   char tempCountry[100];
   int totalMembers = 0;
-  struct database reservedDATA[20];
+  database reservedDATA[20];
   //Store the current country
   strcpy(tempCountry, (*arrayCategories)[answer - 1].country);
 
   //propmt user (Quantity of adult members (18+ years old))
   propmtUserAdultMembers(&result, &answer, &totalMembers);
   //Prompt user (adult member's age)
-  propmtUserAdultAges(&result, &answer, &totalMembers);
+  propmtUserAdultAges(&result, &answer, &totalMembers, &reservedDATA);
   //propmt user (Quantity of children members (17- years old))
   propmtUserChildren(&result, &answer, &totalMembers);
   //Prompt user (children member's age)
-  propmtUserChildrenAges(&result, &answer, &totalMembers);
+  propmtUserChildrenAges(&result, &answer, &totalMembers, &reservedDATA);
 }
