@@ -6,49 +6,38 @@
 #include <string.h>
 
 #define destinationsFile "destination.txt"
+#define databaseRootFile "database/"
 #define TOTAL (100)
 
 typedef struct category Category;
 typedef struct info Information;
 
-struct category
-{
-  int price;
-  int tax;
-  char country[50];
-};
-
-struct info
-{
-  char code[5];
-  char country[50];
-  int price;
-  float tax;
-};
-
+// This is our external files
+#include "codes/structs.h"
 #include "codes/manageDestinations.c"
 #include "codes/reserveTicket.c"
-// -------------- MANAGE DESTINATION --------------
-void readAllDest(FILE *file, Category *category, int *total, Information (*categories)[]);
 
+void readAllDest(FILE *file, int *total, Information (*categories)[]);
+
+// -------------- MANAGE DESTINATION --------------
 void manageDestination(FILE *file, Information (*arrayCategories)[], int *total);
 
 // --------------- RESERVE TICKET ------------------
-void reserveTicket(FILE *file, Information (*arrayCategories)[], int *total);
+void reserveTicket(char *filePath, Information (*arrayCategories)[], int *total);
+
+// ------------------ BUY TICKET -------------------
+// void buyTicket()
 
 int main(void)
 {
-
-  FILE *destinationFile;
-  FILE *database;
-  Category currentCategory;
+  Documents Files;
   Information allCategories[TOTAL];
   unsigned int totalNumCategories = 0;
 
-  readAllDest(destinationFile, &currentCategory, &totalNumCategories, &allCategories);
+  readAllDest(Files.getDestinations, &totalNumCategories, &allCategories);
 
-  //manageDestination(destinationFile, &allCategories, &totalNumCategories);
-  reserveTicket(database, &allCategories, &totalNumCategories);
+  // manageDestination(Files.getDestinations, &allCategories, &totalNumCategories);
+  // reserveTicket(databaseRootFile, &allCategories, &totalNumCategories);
 
   return 0;
 }

@@ -1,5 +1,4 @@
 #define TOTALMEMBERS (16)
-#define databaseFile "database/"
 
 typedef struct database database;
 
@@ -251,7 +250,7 @@ void storeData(char *sampleFilePath, char *currentCountry, float currentTax, dat
   return;
 }
 
-void reserveTicket(FILE *file, Information (*arrayCategories)[], int *total)
+void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *total)
 {
   //Display destinations-
   puts("FLIGHT DESTINATION\n");
@@ -316,8 +315,11 @@ void reserveTicket(FILE *file, Information (*arrayCategories)[], int *total)
       random = generateRandom();
       generateFilePath(root, random);
     } while (checkFilePath(root));
-    printf("\nYour reservation code: %d", random);
+    printf("\nYour reservation code: \"%d\"", random);
     storeData(root, tempCountry, tempTax, &reservedDATA, totalMembers);
   }
+
+  puts("\nPress any KEY to return to MAIN");
+  getch();
   return;
 }

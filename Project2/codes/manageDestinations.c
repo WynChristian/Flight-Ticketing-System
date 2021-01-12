@@ -41,7 +41,7 @@ void recordDest(Category *category, int index,
   return;
 } // printDest
 
-void readAllDest(FILE *file, Category *category, int *total, Information (*categories)[])
+void readAllDest(FILE *file, int *total, Information (*categories)[])
 {
   *total = 0;
   file = fopen(destinationsFile, "r");
@@ -52,9 +52,10 @@ void readAllDest(FILE *file, Category *category, int *total, Information (*categ
   }
 
   int i = 0;
-  while (scanDest(file, category, total))
+  Category category;
+  while (scanDest(file, &category, total))
   {
-    recordDest(category, ++i, categories);
+    recordDest(&category, ++i, categories);
   }
 
   return;
