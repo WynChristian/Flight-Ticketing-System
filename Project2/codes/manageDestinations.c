@@ -1,31 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <time.h>
-#include <stdbool.h>
-#include <string.h>
 
-#define destinationsFile "destination.txt"
-#define TOTAL (100)
-typedef struct category Category;
-typedef struct info Information;
-
-struct category
-{
-  int price;
-  int tax;
-  char country[50];
-};
-
-struct info
-{
-  char code[5];
-  char country[50];
-  int price;
-  float tax;
-};
-
-// -------------- MANAGE DESTINATION --------------
 int scanDest(FILE *file, Category *current, int *total)
 {
   // Read the file and check if its valid; return number (1 / 0)
@@ -88,30 +61,7 @@ void readAllDest(FILE *file, Category *category, int *total, Information (*categ
   return;
 }
 
-void addDest(FILE *file, Information (*arrayCategories)[], int total, bool check);
-
-void editDest(FILE *file, Information (*arrayCategories)[], int total, bool check);
-
-void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool check);
-
-void displayDest(Information (*arrayCategories)[], int total);
-
-void manageDestination(FILE *file, Information (*arrayCategories)[], int *total);
-
-int main(void)
-{
-  FILE *destinationFile;
-  Category currentCategory;
-  Information allCategories[TOTAL];
-  unsigned int totalNumCategories = 0;
-
-  readAllDest(destinationFile, &currentCategory, &totalNumCategories, &allCategories);
-
-  manageDestination(destinationFile, &allCategories, &totalNumCategories);
-  return 0;
-}
-
-void addDest(FILE *file, Information (*arrayCategories)[], int total, bool checkBuffer)
+void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool checkBuffer)
 {
   if (checkBuffer)
   {
@@ -120,13 +70,12 @@ void addDest(FILE *file, Information (*arrayCategories)[], int total, bool check
     checkBuffer = false;
   }
 
-  total += 1;
   int result;
   char tempDest[50];
   unsigned int tempPrice;
   unsigned int tempTax;
 
-  printf("\n\nDestination Code: %03d", total);
+  printf("\n\nDestination Code: %03d", (*total + 1));
 
   printf("\nEnter new destination(No space): ");
   scanf("%s", tempDest);
@@ -152,7 +101,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int total, bool check
   answer = getch();
   if (answer == 'y' || answer == 'Y')
   {
-    int index = total - 1;
+    int index = *total;
     //append the data in the file
     file = fopen(destinationsFile, "a");
     fprintf(file, "\n%-10s %10d %d%%", tempDest, tempPrice, tempTax);
@@ -162,6 +111,8 @@ void addDest(FILE *file, Information (*arrayCategories)[], int total, bool check
     strcpy((*arrayCategories)[index].country, tempDest);
     (*arrayCategories)[index].price = tempPrice;
     (*arrayCategories)[index].tax = tempTax * 0.01;
+
+    *total += 1;
   }
 
   printf("\nAnother record(y/n)?");
@@ -172,7 +123,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int total, bool check
   }
   else if (answer == 'n' || answer == 'N')
   {
-    return manageDestination(file, arrayCategories, &total);
+    return;
   }
 
   return;
@@ -239,7 +190,7 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
   }
   else if (answer == 'n' || answer == 'N')
   {
-    return manageDestination(file, arrayCategories, &total);
+    return;
   }
 }
 
@@ -310,7 +261,7 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
   }
   else if (answer == 'n' || answer == 'N')
   {
-    return manageDestination(file, arrayCategories, total);
+    return;
   }
 }
 
@@ -347,14 +298,14 @@ void manageDestination(FILE *file, Information (*arrayCategories)[], int *total)
   switch (choice)
   {
   case '1':
-    addDest(file, arrayCategories, *total, false);
-    break;
+    addDest(file, arrayCategories, total, false);
+    manageDestination(file, arrayCategories, total);
   case '2':
     editDest(file, arrayCategories, *total, false);
-    break;
+    manageDestination(file, arrayCategories, total);
   case '3':
     deleteDest(file, arrayCategories, total, false);
-    break;
+    manageDestination(file, arrayCategories, total);
   case '4':
     displayDest(arrayCategories, *total);
     manageDestination(file, arrayCategories, total);
