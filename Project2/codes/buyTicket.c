@@ -27,9 +27,6 @@ void updateSalesReport(Report (*arrayReports)[], int index, int tax, CurrentOutp
 
   (*arrayReports)[index].amount += currentoutput->price;
   (*arrayReports)[index].tax += finalTax;
-
-  printf("\nTesting  (*arrayReports)[%d].amount = %.2f", index, (*arrayReports)[index].amount);
-  printf("\nTesting  (*arrayReports)[%d].tax = %.2f", index, (*arrayReports)[index].tax);
 }
 
 int scanData(FILE *data, CurrentOutput *currentdata)
@@ -63,7 +60,6 @@ int checkCountry(char *country, Report (*arrayReports)[], int *totalCountries)
   {
     if (!strcmp(country, (*arrayReports)[i].country))
     {
-      printf("\nTESTING country comparing is TRUEEEE");
       return result;
     }
     result++;
