@@ -1,0 +1,6 @@
+COUNTRY     tax
+
+age        price
+age        price
+age        price
+...
