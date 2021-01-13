@@ -6,22 +6,18 @@ float calculateDiscount(int age, int price)
 
   if (age > 5 && age < 60)
   {
-    printf("\n TESTING price = %d", price);
     return price;
   }
   else if (age >= 60)
   {
     amount = price * 0.80;
-    printf("\n TESTING amount (20%%)= %.2f", amount);
   }
   else if (age > 1 && age < 6)
   {
     amount = price * 0.90;
-    printf("\n TESTING amount (10%%)= %.2f", amount);
   }
   else
   {
-    printf("\n TESTING amount = 0");
     return 0.00;
   }
   return amount;
