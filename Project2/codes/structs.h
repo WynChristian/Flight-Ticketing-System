@@ -15,6 +15,11 @@ typedef struct files Documents;         // For files
 typedef struct report Report;
 typedef struct totalReport TotalReport;
 
+typedef struct currentData CurrentData;
+typedef struct Database CurrentOutput;
+typedef struct Database Database;
+typedef struct Database Transactions;
+
 struct category
 {
   int price;
@@ -56,4 +61,18 @@ struct files
   FILE *getDestinations;
   FILE *appendTransaction;
   FILE *salesReport;
+  FILE *reservedData;
+};
+
+struct currentData
+{
+  char country[100];
+  int tax;
+  int total;
+};
+
+struct Database
+{
+  int age;
+  float price;
 };

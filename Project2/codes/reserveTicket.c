@@ -1,37 +1,33 @@
-#define TOTALMEMBERS (16)
 
-typedef struct database database;
 
-struct database
-{
-  int age;
-  float price;
-};
-
-int calculateDiscount(int age, float price)
+float calculateDiscount(int age, int price)
 {
   float amount;
 
   if (age > 5 && age < 60)
   {
+    printf("\n TESTING price = %d", price);
     return price;
   }
   else if (age >= 60)
   {
-    amount = price * 0.20;
+    amount = price * 0.80;
+    printf("\n TESTING amount (20%%)= %.2f", amount);
   }
   else if (age > 1 && age < 6)
   {
-    amount = price * 0.10;
+    amount = price * 0.90;
+    printf("\n TESTING amount (10%%)= %.2f", amount);
   }
   else
   {
-    amount = 0;
+    printf("\n TESTING amount = 0");
+    return 0.00;
   }
   return amount;
 }
 
-void calculatePrices(database (*datas)[], int total, float *price)
+void calculatePrices(Database (*datas)[], int total, float *price)
 {
   float totalAmounts = 0;
   int currentAmount;
@@ -46,17 +42,17 @@ void calculatePrices(database (*datas)[], int total, float *price)
   printf("\nTotal ticket price: %.2f", totalAmounts);
 }
 
-void propmtUserAdultMembers(int *result, int *answer, int *members)
+void propmtUserAdultMembers(int *result, int *answer, int *members, int totalMembers)
 {
   *result = 0;
   *answer = 0;
   printf("\nHow many adults(18+ years old): ");
   *result = scanf("%d", answer);
-  while (!(*result) || *answer < 0 || *answer > TOTALMEMBERS)
+  while (!(*result) || *answer < 0 || *answer > totalMembers)
   {
-    if (*answer > TOTALMEMBERS)
+    if (*answer > totalMembers)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", TOTALMEMBERS);
+      printf("\nSorry, we can reserve for maximum of %d members only", totalMembers);
       printf("\nHow many adults: ");
       *result = scanf("%d", answer);
       break;
@@ -76,7 +72,7 @@ void propmtUserAdultMembers(int *result, int *answer, int *members)
   return;
 }
 
-void propmtUserAdultAges(int *result, int *answer, int *members, database (*datas)[])
+void propmtUserAdultAges(int *result, int *answer, int *members, Database (*datas)[])
 {
   for (int i = 0; i < *members; i++)
   {
@@ -103,9 +99,9 @@ void propmtUserAdultAges(int *result, int *answer, int *members, database (*data
   }
 }
 
-void propmtUserChildren(int *result, int *answer, int *members, int *beforeMembers)
+void propmtUserChildren(int *result, int *answer, int *members, int *beforeMembers, int totalMembers)
 {
-  if (*members == TOTALMEMBERS)
+  if (*members == totalMembers)
     return;
   *result = 0;
   *answer = 0;
@@ -114,16 +110,16 @@ void propmtUserChildren(int *result, int *answer, int *members, int *beforeMembe
   *result = scanf("%d", &*answer);
   int tempTotalMembers = (*members) + *answer;
   // Data validation
-  while (!(*result) || *answer < 0 || *answer > TOTALMEMBERS || tempTotalMembers > TOTALMEMBERS)
+  while (!(*result) || *answer < 0 || *answer > totalMembers || tempTotalMembers > totalMembers)
   {
-    if (tempTotalMembers < TOTALMEMBERS)
+    if (tempTotalMembers < totalMembers)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", TOTALMEMBERS);
-      printf("\nAvailable reservation = %d", TOTALMEMBERS - *members);
+      printf("\nSorry, we can reserve for maximum of %d members only", totalMembers);
+      printf("\nAvailable reservation = %d", totalMembers - *members);
     }
-    if (*answer > TOTALMEMBERS)
+    if (*answer > totalMembers)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", TOTALMEMBERS);
+      printf("\nSorry, we can reserve for maximum of %d members only", totalMembers);
       printf("\nHow many adults: ");
       *result = scanf("%d", answer);
       break;
@@ -141,9 +137,9 @@ void propmtUserChildren(int *result, int *answer, int *members, int *beforeMembe
   *members += *answer;
 }
 
-void propmtUserChildrenAges(int *result, int *answer, int *members, int *beforeMembers, database (*datas)[])
+void propmtUserChildrenAges(int *result, int *answer, int *members, int *beforeMembers, Database (*datas)[], int totalMembers)
 {
-  if (*members == TOTALMEMBERS)
+  if (*members == totalMembers)
     return;
 
   int totalChild = *answer;
@@ -238,7 +234,7 @@ int checkFilePath(char *sampleFilePath)
   return 1;
 }
 
-void storeData(char *sampleFilePath, char *currentCountry, float currentTax, database (*currentData)[], int total)
+void storeData(char *sampleFilePath, char *currentCountry, float currentTax, Database (*currentData)[], int total)
 {
   FILE *currentDataFile = fopen(sampleFilePath, "w");
   fprintf(currentDataFile, "%-10s %7.f %d\n\n", currentCountry, currentTax, total);
@@ -250,7 +246,7 @@ void storeData(char *sampleFilePath, char *currentCountry, float currentTax, dat
   return;
 }
 
-void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *total)
+void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *total, int totalPassenger)
 {
   //Display destinations-
   puts("FLIGHT DESTINATION\n");
@@ -285,8 +281,8 @@ void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *to
   char tempCountry[100];
   float tempTax;
   float tempPrice;
-  int totalMembers = 0;
-  database reservedDATA[20];
+  int members = 0;
+  Database reservedDATA[20];
 
   //Store the current country
   strcpy(tempCountry, (*arrayCategories)[answer - 1].country);
@@ -294,16 +290,16 @@ void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *to
   tempPrice = (float)(*arrayCategories)[answer - 1].price;
 
   //propmt user (Quantity of adult members (18+ years old))
-  propmtUserAdultMembers(&result, &answer, &totalMembers);
+  propmtUserAdultMembers(&result, &answer, &members, totalPassenger);
   //Prompt user (adult member's age)
-  propmtUserAdultAges(&result, &answer, &totalMembers, &reservedDATA);
+  propmtUserAdultAges(&result, &answer, &members, &reservedDATA);
   //propmt user (Quantity of children members (17- years old))
   int adultMembers;
-  propmtUserChildren(&result, &answer, &totalMembers, &adultMembers);
+  propmtUserChildren(&result, &answer, &members, &adultMembers, totalPassenger);
   //Prompt user (children member's age)
-  propmtUserChildrenAges(&result, &answer, &totalMembers, &adultMembers, &reservedDATA);
+  propmtUserChildrenAges(&result, &answer, &members, &adultMembers, &reservedDATA, totalPassenger);
 
-  calculatePrices(&reservedDATA, totalMembers, &tempPrice);
+  calculatePrices(&reservedDATA, members, &tempPrice);
 
   if (requestReservation())
   {
@@ -316,7 +312,7 @@ void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *to
       generateFilePath(root, random);
     } while (checkFilePath(root));
     printf("\nYour reservation code: \"%d\"", random);
-    storeData(root, tempCountry, tempTax, &reservedDATA, totalMembers);
+    storeData(root, tempCountry, tempTax, &reservedDATA, members);
   }
 
   puts("\nPress any KEY to return to MAIN");

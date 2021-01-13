@@ -12,9 +12,8 @@
 #define databaseRootFile "database/"
 
 #define TOTAL (100)
-
-typedef struct category Category;
-typedef struct info Information;
+#define TOTALMEMBERS (16)   //For reservation per reservation
+#define MAXTRANSACTION (16) //For non reservation per transaction
 
 // This is our external files
 #include "codes/structs.h"
@@ -29,10 +28,10 @@ void initialize(Information (*arrayCategories)[], Report (*arrayReports)[], int 
 void manageDestination(FILE *file, Information (*arrayCategories)[], int *total);
 
 // --------------- RESERVE TICKET ------------------
-void reserveTicket(char *filePath, Information (*arrayCategories)[], int *total);
+void reserveTicket(char *filePath, Information (*arrayCategories)[], int *total, int totalMembers);
 
 // ------------------ BUY TICKET -------------------
-void buyTicket(FILE *fileTransaction, Information (*arrayCategories)[], Report (*arrayReports)[], int total, char *dataRootFile, int *totalCountries, char *transactionFilePath);
+void buyTicket(Documents *files, Information (*arrayCategories)[], Report (*arrayReports)[], unsigned int *total, char *dataRootFile, int *totalCountries, char *transactionFilePath, char *reportFilePath, int maxTransaction);
 
 int main(void)
 {
@@ -44,9 +43,9 @@ int main(void)
 
   readAllDest(Files.getDestinations, &totalNumCategories, &allCategories);
   initialize(&allCategories, &salesReports, &totalNumCategories, &totalCountry);
-
+  printf("\n\tTESTING totalCountry = %d", totalCountry);
   // manageDestination(Files.getDestinations, &allCategories, &totalNumCategories);
-  // reserveTi1cket(databaseRootFile, &allCategories, &totalNumCategories);
-  buyTicket(Files.appendTransaction, &allCategories, &salesReports, totalNumCategories, databaseRootFile, &totalCountry, transactionsFile);
+  // reserveTicket(databaseRootFile, &allCategories, &totalNumCategories, TOTALMEMBERS);
+  buyTicket(&Files, &allCategories, &salesReports, &totalNumCategories, databaseRootFile, &totalCountry, transactionsFile, reportFile, MAXTRANSACTION);
   return 0;
 }
