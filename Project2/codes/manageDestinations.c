@@ -320,8 +320,7 @@ void manageDestination(FILE *file,
     displayDest(arrayCategories, *total);
     manageDestination(file, arrayCategories, total);
   case '5':
-    puts("You picked 5");
-    break;
+    return;
   default:
     puts("Error, invalid input. try again");
     manageDestination(file, arrayCategories, total);
