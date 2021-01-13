@@ -248,6 +248,8 @@ void storeData(char *sampleFilePath, char *currentCountry, float currentTax, Dat
 
 void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *total, int totalPassenger)
 {
+  system("cls");
+
   //Display destinations-
   puts("FLIGHT DESTINATION\n");
   for (int i = 0; i < *total; i++)

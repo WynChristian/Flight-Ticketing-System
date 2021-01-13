@@ -450,6 +450,7 @@ void buyReservedTicket(Documents *files, Information (*arrayCategories)[], char 
 // ----------------------------- Buy Ticket MENU --------------------------
 void buyTicket(Documents *files, Information (*arrayCategories)[], Report (*arrayReports)[], unsigned int *total, char *dataRootFile, int *totalCountries, char *transactionFilePath, char *reportFilePath, int maxTransaction)
 {
+  system("cls");
 
   int result;
   char menu[4][100] = {

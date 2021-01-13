@@ -1,5 +1,6 @@
 void displaySalesReport(Report (*arrayReport)[], int total)
 {
+  system("cls");
   if (total == 0)
   {
     printf("\nSorry, there's nothing to see here... ");

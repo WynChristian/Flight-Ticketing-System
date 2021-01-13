@@ -1,5 +1,6 @@
 void displayMainMenu(Documents *files, Information (*arrayCategories)[], Report (*arrayReports)[], int *total, int totalMembers, char *dataRootFile, int *totalCountries, char *transactionFilePath, char *reportFilePath, int maxTransaction)
 {
+  system("cls");
   printf("\nFLIGHT RESERVATION SYSTEM\n");
   char menu[5][100] = {
       "Manage Destination",
