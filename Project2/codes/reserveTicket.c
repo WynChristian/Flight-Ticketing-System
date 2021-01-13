@@ -38,7 +38,8 @@ void calculatePrices(Database (*datas)[], int total, float *price)
   printf("\nTotal ticket price: %.2f", totalAmounts);
 }
 
-void propmtUserAdultMembers(int *result, int *answer, int *members, int totalMembers)
+void propmtUserAdultMembers(int *result, int *answer,
+                            int *members, int totalMembers)
 {
   *result = 0;
   *answer = 0;
@@ -68,7 +69,8 @@ void propmtUserAdultMembers(int *result, int *answer, int *members, int totalMem
   return;
 }
 
-void propmtUserAdultAges(int *result, int *answer, int *members, Database (*datas)[])
+void propmtUserAdultAges(int *result, int *answer,
+                         int *members, Database (*datas)[])
 {
   for (int i = 0; i < *members; i++)
   {
@@ -95,7 +97,9 @@ void propmtUserAdultAges(int *result, int *answer, int *members, Database (*data
   }
 }
 
-void propmtUserChildren(int *result, int *answer, int *members, int *beforeMembers, int totalMembers)
+void propmtUserChildren(int *result, int *answer,
+                        int *members, int *beforeMembers,
+                        int totalMembers)
 {
   if (*members == totalMembers)
     return;
@@ -133,7 +137,9 @@ void propmtUserChildren(int *result, int *answer, int *members, int *beforeMembe
   *members += *answer;
 }
 
-void propmtUserChildrenAges(int *result, int *answer, int *members, int *beforeMembers, Database (*datas)[], int totalMembers)
+void propmtUserChildrenAges(int *result, int *answer,
+                            int *members, int *beforeMembers,
+                            Database (*datas)[], int totalMembers)
 {
   if (*members == totalMembers)
     return;
@@ -230,7 +236,9 @@ int checkFilePath(char *sampleFilePath)
   return 1;
 }
 
-void storeData(char *sampleFilePath, char *currentCountry, float currentTax, Database (*currentData)[], int total)
+void storeData(char *sampleFilePath, char *currentCountry,
+               float currentTax, Database (*currentData)[],
+               int total)
 {
   FILE *currentDataFile = fopen(sampleFilePath, "w");
   fprintf(currentDataFile, "%-10s %7.f %d\n\n", currentCountry, currentTax, total);
@@ -242,7 +250,9 @@ void storeData(char *sampleFilePath, char *currentCountry, float currentTax, Dat
   return;
 }
 
-void reserveTicket(char *databaseFile, Information (*arrayCategories)[], int *total, int totalPassenger)
+void reserveTicket(char *databaseFile,
+                   Information (*arrayCategories)[],
+                   int *total, int totalPassenger)
 {
   system("cls");
 

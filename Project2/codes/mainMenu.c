@@ -1,4 +1,10 @@
-void displayMainMenu(Documents *files, Information (*arrayCategories)[], Report (*arrayReports)[], int *total, int totalMembers, char *dataRootFile, int *totalCountries, char *transactionFilePath, char *reportFilePath, int maxTransaction)
+void displayMainMenu(Documents *files,
+                     Information (*arrayCategories)[],
+                     Report (*arrayReports)[],
+                     int *total, int totalMembers,
+                     char *dataRootFile, int *totalCountries,
+                     char *transactionFilePath,
+                     char *reportFilePath, int maxTransaction)
 {
   system("cls");
   printf("\nFLIGHT RESERVATION SYSTEM\n");
@@ -19,24 +25,48 @@ void displayMainMenu(Documents *files, Information (*arrayCategories)[], Report 
   {
   case '1':
     manageDestination(files->getDestinations, arrayCategories, total);
-    displayMainMenu(files, arrayCategories, arrayReports, total, totalMembers, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
+    displayMainMenu(files, arrayCategories,
+                    arrayReports, total,
+                    totalMembers, dataRootFile,
+                    totalCountries, transactionFilePath,
+                    reportFilePath, maxTransaction);
 
   case '2':
     reserveTicket(dataRootFile, arrayCategories, total, totalMembers);
-    displayMainMenu(files, arrayCategories, arrayReports, total, totalMembers, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
+    displayMainMenu(files, arrayCategories,
+                    arrayReports, total,
+                    totalMembers, dataRootFile,
+                    totalCountries, transactionFilePath,
+                    reportFilePath, maxTransaction);
     break;
   case '3':
-    buyTicket(files, arrayCategories, arrayReports, total, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
-    displayMainMenu(files, arrayCategories, arrayReports, total, totalMembers, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
+    buyTicket(files, arrayCategories,
+              arrayReports, total,
+              dataRootFile, totalCountries,
+              transactionFilePath, reportFilePath,
+              maxTransaction);
+    displayMainMenu(files, arrayCategories,
+                    arrayReports, total,
+                    totalMembers, dataRootFile,
+                    totalCountries, transactionFilePath,
+                    reportFilePath, maxTransaction);
     break;
   case '4':
     displaySalesReport(arrayReports, *totalCountries);
-    displayMainMenu(files, arrayCategories, arrayReports, total, totalMembers, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
+    displayMainMenu(files, arrayCategories,
+                    arrayReports, total,
+                    totalMembers, dataRootFile,
+                    totalCountries, transactionFilePath,
+                    reportFilePath, maxTransaction);
     break;
   case '5':
     exit(0);
   default:
     puts("Error, invalid input. try again");
-    displayMainMenu(files, arrayCategories, arrayReports, total, totalMembers, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
+    displayMainMenu(files, arrayCategories,
+                    arrayReports, total,
+                    totalMembers, dataRootFile,
+                    totalCountries, transactionFilePath,
+                    reportFilePath, maxTransaction);
   }
 }

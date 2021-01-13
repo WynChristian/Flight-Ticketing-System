@@ -32,9 +32,14 @@ int main(void)
   unsigned int totalCountry = 0;
 
   readAllDest(Files.getDestinations, &totalNumCategories, &allCategories);
-  initialize(&allCategories, &salesReports, &totalNumCategories, &totalCountry, transactionsFile);
+  initialize(&allCategories, &salesReports, &totalNumCategories,
+             &totalCountry, transactionsFile);
 
-  displayMainMenu(&Files, &allCategories, &salesReports, &totalNumCategories, TOTALMEMBERS, databaseRootFile, &totalCountry, transactionsFile, reportFile, MAXTRANSACTION);
+  displayMainMenu(&Files, &allCategories, &salesReports,
+                  &totalNumCategories, TOTALMEMBERS,
+                  databaseRootFile, &totalCountry,
+                  transactionsFile, reportFile,
+                  MAXTRANSACTION);
 
   return 0;
 }

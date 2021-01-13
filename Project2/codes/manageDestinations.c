@@ -285,7 +285,9 @@ void displayDest(Information (*arrayCategories)[], int total)
   return;
 }
 
-void manageDestination(FILE *file, Information (*arrayCategories)[], int *total)
+void manageDestination(FILE *file,
+                       Information (*arrayCategories)[],
+                       int *total)
 {
   system("cls");
   char choice;
@@ -326,7 +328,9 @@ void manageDestination(FILE *file, Information (*arrayCategories)[], int *total)
   }
 }
 
-void initialize(Information (*arrayCategories)[], Report (*arrayReports)[], int *total, int *totalCountry, char *fileTransaction)
+void initialize(Information (*arrayCategories)[],
+                Report (*arrayReports)[], int *total,
+                int *totalCountry, char *fileTransaction)
 {
   for (int i = 0; i < *total; i++)
   {
