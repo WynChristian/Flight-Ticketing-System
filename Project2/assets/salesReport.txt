@@ -1,5 +1,6 @@
 Flight          Quantity   Amount     Trave Tax
 
 USA            0         0.00       0.00
-France         11        9300.00    837.00
-China          4         360.00     28.80
+France         8         7300.00    657.00
+China          0         0.00       0.00
+Japan          4         80000.00   8000.00

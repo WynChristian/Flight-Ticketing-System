@@ -1,28 +1,2 @@
+Destination   Age   Sales Amount   Travel Tax
 
-China         23     0.08
-China         23     0.08
-China         3      0.00
-China         5      0.00
-China         23     100.00
-China         67     80.00
-China         3      90.00
-China         4      90.00
-China         23     100.00
-China         67     80.00
-China         3      90.00
-China         4      90.00
-China         23     100.00
-China         67     80.00
-China         3      90.00
-China         4      90.00
-France        34     1000.00
-France        45     1000.00
-France        34     1000.00
-France        76     800.00
-France        65     800.00
-France        3      900.00
-France        4      900.00
-France        5      900.00
-France        6      1000.00
-France        0      0.00
-France        7      1000.00

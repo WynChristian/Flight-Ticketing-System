@@ -266,11 +266,19 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
 
 void displayDest(Information (*arrayCategories)[], int total)
 {
-  puts("List of Destinations\n");
-  printf("%-14s %5s\n\n", "Destination", "Price");
-  for (int i = 0; i < total; i++)
+  if (total == 0)
   {
-    printf("%-14s %d\n", (*arrayCategories)[i].country, (*arrayCategories)[i].price);
+    printf("\nSorry, there's no available flight for right now");
+  }
+  else
+  {
+
+    puts("List of Destinations\n");
+    printf("%-14s %5s\n\n", "Destination", "Price");
+    for (int i = 0; i < total; i++)
+    {
+      printf("%-14s %d\n", (*arrayCategories)[i].country, (*arrayCategories)[i].price);
+    }
   }
   puts("Press any key to RETURN");
   char some = getch();
@@ -279,6 +287,7 @@ void displayDest(Information (*arrayCategories)[], int total)
 
 void manageDestination(FILE *file, Information (*arrayCategories)[], int *total)
 {
+  system("cls");
   char choice;
   char menu[5][100] = {
       "Add New Destination",
@@ -317,7 +326,7 @@ void manageDestination(FILE *file, Information (*arrayCategories)[], int *total)
   }
 }
 
-void initialize(Information (*arrayCategories)[], Report (*arrayReports)[], int *total, int *totalCountry)
+void initialize(Information (*arrayCategories)[], Report (*arrayReports)[], int *total, int *totalCountry, char *fileTransaction)
 {
   for (int i = 0; i < *total; i++)
   {
@@ -327,4 +336,7 @@ void initialize(Information (*arrayCategories)[], Report (*arrayReports)[], int 
     (*arrayReports)[i].tax = 0;
     *totalCountry += 1;
   }
+  FILE *file = fopen(fileTransaction, "w");
+  fprintf(file, "%-13s %-5s %-14s %s\n\n", "Destination", "Age", "Sales Amount", "Travel Tax");
+  fclose(file);
 }

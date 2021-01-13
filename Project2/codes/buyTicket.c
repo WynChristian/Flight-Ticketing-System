@@ -202,7 +202,9 @@ void appendTransactionNonReserved(Documents *files, Transactions (*transactionsL
   files->appendTransaction = fopen(filePath, "a");
   for (int i = 0; i < *totalMember; i++)
   {
-    fprintf(files->appendTransaction, "\n%- 12s %- 7d %.2f", category->country, (*transactionsList)[i].age, (*transactionsList)[i].price);
+    float price = (*transactionsList)[i].price;
+    float tax = price * category->tax;
+    fprintf(files->appendTransaction, "\n%- 12s %-7d %-15.2f %.2f", category->country, (*transactionsList)[i].age, (*transactionsList)[i].price, tax);
   }
   fclose(files->appendTransaction);
 }
@@ -300,10 +302,12 @@ void buyNonReservedTicket(Documents *files, Information (*arrayCategories)[], in
 }
 
 // --------------------- For Reserved Ticket -------------------------
-void appendTransactionReserved(Documents *files, char *filePath, char *currentCountry, CurrentOutput *currentOutput)
+void appendTransactionReserved(Documents *files, char *filePath, CurrentData *category, CurrentOutput *currentOutput)
 {
+  float price = currentOutput->price;
+  float tax = price * category->tax * 0.01;
   files->appendTransaction = fopen(filePath, "a");
-  fprintf(files->appendTransaction, "\n%- 12s %- 7d %.2f", currentCountry, currentOutput->age, currentOutput->price);
+  fprintf(files->appendTransaction, "\n%-11s %-7d %-15.2f %.2f", category->country, currentOutput->age, currentOutput->price, tax);
   fclose(files->appendTransaction);
 }
 
@@ -372,7 +376,7 @@ void storeCodeData(Documents *files, char *filePath, int *totalCountries, Report
   }
   while (scanData(files->reservedData, &currentoutput))
   {
-    appendTransactionReserved(files, transactionFilePath, current.country, &currentoutput);
+    appendTransactionReserved(files, transactionFilePath, &current, &currentoutput);
     updateSalesReportReserved(arrayReports, index, current.tax, &currentoutput, totalCountries, reportFilePath, files);
   }
   remove(filePath);
@@ -470,9 +474,7 @@ void buyTicket(Documents *files, Information (*arrayCategories)[], Report (*arra
     buyNonReservedTicket(files, arrayCategories, totalCountries, arrayReports, transactionFilePath, reportFilePath, total, maxTransaction);
     buyTicket(files, arrayCategories, arrayReports, total, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
   case '3':
-    printf("\nYou picked 3");
-    buyTicket(files, arrayCategories, arrayReports, total, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
-    break;
+    return;
   default:
     puts("Error, invalid input. try again");
     buyTicket(files, arrayCategories, arrayReports, total, dataRootFile, totalCountries, transactionFilePath, reportFilePath, maxTransaction);
