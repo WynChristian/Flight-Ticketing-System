@@ -1,12 +1,5 @@
 # Format for reserved datas
 
-COUNTRY tax total
-
-age(int) price(float)
-age(int) price(float)
-age(int) price(float)
-age(int) price(float)
-...
 
 | Country  | tax          | total |
 | -------- | ------------ | ----- |
