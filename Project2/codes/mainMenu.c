@@ -1,10 +1,10 @@
 /* 
   The `displayMainMenu` function display the main menu
   while it tracks the modifications of the datas
-  throughout the program, those are the following:
-  > arrayCategories
-  > arrayReports
-  > currentNumCategories
+  throughout the program, those datas are the following:
+    * arrayCategories
+    * arrayReports
+    * currentNumCategories
  */
 void displayMainMenu(Documents *files,
                      Information (*arrayCategories)[],
@@ -57,7 +57,6 @@ void displayMainMenu(Documents *files,
                     maxMembers, dataRootFile,
                     totalCountries, transactionFilePath,
                     reportFilePath, maxTransaction);
-    break;
   case '3':
     // if 3, then call the `buyTicket` function from `codes/buyTicket.c` file
     buyTicket(files, arrayCategories,
@@ -71,7 +70,6 @@ void displayMainMenu(Documents *files,
                     maxMembers, dataRootFile,
                     totalCountries, transactionFilePath,
                     reportFilePath, maxTransaction);
-    break;
   case '4':
     // if 4, then call the `displaySalesReport` function from `codes/displayReport.c` file
     displaySalesReport(arrayReports, *totalCountries);
@@ -81,7 +79,6 @@ void displayMainMenu(Documents *files,
                     maxMembers, dataRootFile,
                     totalCountries, transactionFilePath,
                     reportFilePath, maxTransaction);
-    break;
   case '5':
     // if 5, stop executing the program
     exit(0);
@@ -94,4 +91,4 @@ void displayMainMenu(Documents *files,
                     totalCountries, transactionFilePath,
                     reportFilePath, maxTransaction);
   }
-}
+} // displayMainMenu Function
