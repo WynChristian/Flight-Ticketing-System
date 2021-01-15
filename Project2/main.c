@@ -6,18 +6,20 @@
 #include <string.h>
 #include <assert.h>
 
-// This is the file path of our source code
+// This is the file path of the .txt files
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
 #define reportFile "assets/salesReport.txt"
+
+// the database root file
 #define databaseRootFile "database/"
 
 #define TOTAL (100)         // size of an arrays
-#define MAXMEMBERS (16)     //For reservation per reservation
-#define MAXTRANSACTION (16) //For non reservation per transaction
+#define MAXMEMBERS (16)     // For reservation per reservation
+#define MAXTRANSACTION (16) // For non reservation per transaction
 
 // This is our external files
-#include "codes/structs.h"            // just a collection of structs
+#include "codes/structs.h"            // Just a collection of structs
 #include "codes/manageDestinations.c" // 1.] Manage Destination
 #include "codes/reserveTicket.c"      // 2.] Reserve Ticket
 #include "codes/buyTicket.c"          // 3.] Buy Ticket
