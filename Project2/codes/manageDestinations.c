@@ -376,7 +376,6 @@ void manageDestination(FILE *file,
 {
   system("cls");
 
-  char choice;
   char menu[5][100] = {
       "Add New Destination",
       "Edit",
@@ -391,6 +390,8 @@ void manageDestination(FILE *file,
 
   // Prompts the user to choose which category
   printf("Enter Choice: ");
+
+  char choice;
   choice = getchar();
 
   // Analyze the `choice` stored value
