@@ -3,18 +3,18 @@
   
   The following functions are executed first 
   before the MAIN program starts:
-  * readAllDest
-    * scanDest
-    * recordDest
-  * initialize
+  * readAllDest()
+    * scanDest()
+    * recordDest()
+  * initialize()
   
   The following functions are used for 
   managing destinations:
-  * manageDestination
-    * addDest
-    * editDest
-    * deleteDest
-    * displayDest
+  * manageDestination()
+    * addDest()
+    * editDest()
+    * deleteDest()
+    * displayDest()
  */
 
 // This function Reads the current data in the `destinationFile`
