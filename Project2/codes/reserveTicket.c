@@ -1,5 +1,22 @@
+/* 
+  This is where "Reserve Ticket" category locates in.
+  Its generally purpose is to make a file in the `databaseRootFile` root file
+  to save the current reservation information
 
+  Here are the function that used in this category
+    * reserveTicket()
+      * promptUserAdultMembers()
+      * promptUserAdultAges()
+      * promptUserChildren()
+      * promptUserChildrenAges()
+      * calculatePrices()
+      * requestReservation()
+        * generateRandom()
+        * generateFilePath()
+        * checkFilePath()
+ */
 
+// It returns a (float)price with/out discount
 float calculateDiscount(int age, int price)
 {
   float amount;
@@ -21,30 +38,43 @@ float calculateDiscount(int age, int price)
     return 0.00;
   }
   return amount;
-}
+} // calculateDiscount Function
 
+// It calculates all the prices with respect to their ages
 void calculatePrices(Database (*datas)[], int total, float *price)
 {
   float totalAmounts = 0;
   int currentAmount;
 
+  // Loop through the `datas` array to store the discounted prices
+  //  with respect to their indeces
   for (int i = 0; i < total; i++)
   {
     int age = (*datas)[i].age;
     currentAmount = calculateDiscount(age, *price);
     (*datas)[i].price = currentAmount;
+
+    // Increment it to `totalAmount` per currentAmount
     totalAmounts += currentAmount;
   }
-  printf("\nTotal ticket price: %.2f", totalAmounts);
-}
 
-void propmtUserAdultMembers(int *result, int *answer,
+  // Display the total price
+  printf("\nTotal ticket price: %.2f", totalAmounts);
+  return;
+} // calculatePrices Function
+
+// It prompts the user about the no. of adult members
+void promptUserAdultMembers(int *result, int *answer,
                             int *members, int totalMembers)
 {
   *result = 0;
   *answer = 0;
+
+  // Ask user the no. of adults
   printf("\nHow many adults(18+ years old): ");
   *result = scanf("%d", answer);
+
+  // check the input validity
   while (!(*result) || *answer < 0 || *answer > totalMembers)
   {
     if (*answer > totalMembers)
@@ -65,19 +95,26 @@ void propmtUserAdultMembers(int *result, int *answer,
     *result = scanf("%d", answer);
   }
 
+  // Increment `members` to track the total no. of members
   *members += *answer;
   return;
-}
+} // promptUserAdultMembers Function
 
+// It prompts the user about each ages for each adult members
 void propmtUserAdultAges(int *result, int *answer,
                          int *members, Database (*datas)[])
 {
+  // A loop to track the total prompts of ages
   for (int i = 0; i < *members; i++)
   {
     *answer = 0;
     *result = 0;
+
+    // Ask the user about the current member's age
     printf("\nEnter age: ");
     *result = scanf("%d", answer);
+
+    // Check the input data validity
     while (*answer < 18 || !(*result) || *answer > 150)
     {
       puts("Please enter valid input");
@@ -93,23 +130,32 @@ void propmtUserAdultAges(int *result, int *answer,
       printf("\nEnter age: ");
       *result = scanf("%d", answer);
     }
+
+    // Store it in the `datas` array with respect to their indeces
     (*datas)[i].age = *answer;
   }
-}
+  return;
+} // promptUserAdultAges Function
 
-void propmtUserChildren(int *result, int *answer,
+// It prompts the user about how many children
+void promptUserChildren(int *result, int *answer,
                         int *members, int *beforeMembers,
                         int totalMembers)
 {
+  // if the no. of members reach the maximum no. of members
+  //   return to the `reserveTicket` function
   if (*members == totalMembers)
     return;
+
   *result = 0;
   *answer = 0;
 
+  // Prompt the user about the no. of children
   printf("\nHow many children(17- years old): ");
   *result = scanf("%d", &*answer);
   int tempTotalMembers = (*members) + *answer;
-  // Data validation
+
+  // check the input data validity
   while (!(*result) || *answer < 0 || *answer > totalMembers || tempTotalMembers > totalMembers)
   {
     if (tempTotalMembers < totalMembers)
@@ -132,25 +178,37 @@ void propmtUserChildren(int *result, int *answer,
     }
     printf("\nHow many adults(17- years old): ");
     *result = scanf("%d", answer);
-  }
+  } // while loop
+
+  //Track the total no. of members in the current reservation
   *beforeMembers = *members;
   *members += *answer;
-}
+  return;
+} // promptUserChildren Function
 
-void propmtUserChildrenAges(int *result, int *answer,
+// It prompts the user about the age for each children members
+void promptUserChildrenAges(int *result, int *answer,
                             int *members, int *beforeMembers,
                             Database (*datas)[], int totalMembers)
 {
+  // If the current no. of members reach the maximum no. of reservation members
+  //    return to `reserveTicket` function
   if (*members == totalMembers)
     return;
 
   int totalChild = *answer;
+
+  // A loop that prompts the user until it reaches the no. of children members
   for (int i = 0, j = *beforeMembers; i < totalChild; i++, j++)
   {
     *answer = 0;
     *result = 0;
+
+    // ask the user about current child's age
     printf("\nEnter age: ");
     *result = scanf("%d", answer);
+
+    // Check the input data validity
     while (*answer > 17 || !(*result) || *answer < 0)
     {
       puts("Please enter valid input\n");
@@ -166,10 +224,14 @@ void propmtUserChildrenAges(int *result, int *answer,
       printf("\nEnter age: ");
       *result = scanf("%d", answer);
     }
+    // store the current age in the `datas` array with respect to their indeces
     (*datas)[j].age = *answer;
-  }
-}
+  } // for loop
+  return;
+} // promptUserChildrenAges Function
 
+// It prompts the user to proceed the current reservation
+//    returns 1 or true; signifying true or false
 int requestReservation(void)
 {
 
@@ -190,14 +252,17 @@ int requestReservation(void)
     puts("Please enter valid input");
     return requestReservation();
   }
-}
+} // requestReservation Function
 
+// It returns a pseudo-random number with a seed of current time
 int generateRandom(void)
 {
   srand(time(NULL));
   return rand();
-}
+} // generateRandom Function
 
+// It generates a file path by concatenating the `rootFile`, `randomCode`, and ".txt"
+//    returns a string with a format of "`rootFile`/`randomCode`.txt"
 void generateFilePath(char *rootFile, int randomCode)
 {
   char num[20];
@@ -213,18 +278,28 @@ void generateFilePath(char *rootFile, int randomCode)
   {
     length += 1;
   }
+
+  // concatenate the `rootFile` with the current `randomCode`
   for (j = 0; num[j] != '\0'; ++j, ++length)
   {
     root[length] = num[j];
   }
+
+  // concatenate the `rootFile` with ".txt" extension
   for (j = 0; extnsion[j] != '\0'; ++j, ++length)
   {
     root[length] = extnsion[j];
   }
+  // concatenate it with '\0' for string ending
   root[length] = '\0';
-  strcpy(rootFile, root);
-}
 
+  // update the `rootFile` variable with the final value of `root` string
+  strcpy(rootFile, root);
+  return;
+} // generateFilePath Function
+
+// It checks if the current file path is not existing
+//   returns  1 or 2; signifying `true` or `false`
 int checkFilePath(char *sampleFilePath)
 {
   FILE *fp = fopen(sampleFilePath, "r");
@@ -234,8 +309,10 @@ int checkFilePath(char *sampleFilePath)
   }
   fclose(fp);
   return 1;
-}
+} // checkFilePath Function
 
+// This function generate a new file to write the whole data of current reservation
+//   the format of writing the data is in the `database/README.md` file
 void storeData(char *sampleFilePath, char *currentCountry,
                float currentTax, Database (*currentData)[],
                int total)
@@ -248,15 +325,16 @@ void storeData(char *sampleFilePath, char *currentCountry,
   }
   fclose(currentDataFile);
   return;
-}
+} // storeData Function
 
+// It is the main function of the current file
 void reserveTicket(char *databaseFile,
                    Information (*arrayCategories)[],
                    int *total, int totalPassenger)
 {
   system("cls");
 
-  //Display destinations-
+  // Display all the current available destinations
   puts("FLIGHT DESTINATION\n");
   for (int i = 0; i < *total; i++)
   {
@@ -264,12 +342,14 @@ void reserveTicket(char *databaseFile,
   }
   printf("%d %s\n", *total + 1, "Return to MAIN");
 
-  //Prompt user (Choose categories)
+  //Prompt user to choose which categories
   printf("Select reserve destination: ");
 
   int answer;
   int result;
   result = scanf("%d", &answer);
+
+  // Check the input data validity
   while ((answer - 1) > *total || answer < 0 || !result)
   {
     puts("Please enter valid input\n");
@@ -292,38 +372,46 @@ void reserveTicket(char *databaseFile,
   int members = 0;
   Database reservedDATA[20];
 
-  //Store the current country
+  // Store the current selected destination
   strcpy(tempCountry, (*arrayCategories)[answer - 1].country);
   tempTax = (*arrayCategories)[answer - 1].tax * 100;
   tempPrice = (float)(*arrayCategories)[answer - 1].price;
 
-  //propmt user (Quantity of adult members (18+ years old))
-  propmtUserAdultMembers(&result, &answer, &members, totalPassenger);
-  //Prompt user (adult member's age)
-  propmtUserAdultAges(&result, &answer, &members, &reservedDATA);
-  //propmt user (Quantity of children members (17- years old))
-  int adultMembers;
-  propmtUserChildren(&result, &answer, &members, &adultMembers, totalPassenger);
-  //Prompt user (children member's age)
-  propmtUserChildrenAges(&result, &answer, &members, &adultMembers, &reservedDATA, totalPassenger);
+  // Prompt the user about adults no. of members and their ages
+  promptUserAdultMembers(&result, &answer, &members, totalPassenger);
+  promptUserAdultAges(&result, &answer, &members, &reservedDATA);
 
+  int adultMembers;
+  // Prompt the user about children no. of members and their ages
+  promptUserChildren(&result, &answer, &members, &adultMembers, totalPassenger);
+  promptUserChildrenAges(&result, &answer, &members, &adultMembers, &reservedDATA, totalPassenger);
+
+  // Display the total prices with discount
   calculatePrices(&reservedDATA, members, &tempPrice);
 
+  // Ask the user to proceed the current reservation
   if (requestReservation())
   {
     char root[100];
     int random;
+    // Generate a file with a unique `random code`
     do
     {
       strcpy(root, databaseFile);
       random = generateRandom();
       generateFilePath(root, random);
     } while (checkFilePath(root));
+
+    // Display the current reservation code
     printf("\nYour reservation code: \"%d\"", random);
+
+    // Store the data in the current new generate file
     storeData(root, tempCountry, tempTax, &reservedDATA, members);
   }
 
   puts("\nPress any KEY to return to MAIN");
   getch();
+
+  // Return to MAIN
   return;
-}
+} // reserveTicket Function
