@@ -13,7 +13,7 @@
 #define databaseRootFile "database/"
 
 #define TOTAL (100)         // size of an arrays
-#define TOTALMEMBERS (16)   //For reservation per reservation
+#define MAXMEMBERS (16)     //For reservation per reservation
 #define MAXTRANSACTION (16) //For non reservation per transaction
 
 // This is our external files
@@ -44,7 +44,7 @@ int main(void)
 
   // Start the main program
   displayMainMenu(&Files, &allCategories, &salesReports,
-                  &numCategories, TOTALMEMBERS,
+                  &numCategories, MAXMEMBERS,
                   databaseRootFile, &totalCountry,
                   transactionsFile, reportFile,
                   MAXTRANSACTION);
