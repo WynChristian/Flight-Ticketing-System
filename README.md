@@ -5,6 +5,9 @@
 ### Our Project in *Computer Programming*	:computer: of BSIT-1A 	:student:
 ---
 ##       How to **DOWNLOAD** the files*(computer only)*
+> Take note that the source code can update anytime, it means that there are instances 
+> that you will download this code again to get the latest update
+
 1. Click the `code` button
 
    ![alt text](https://scontent.fmnl17-2.fna.fbcdn.net/v/t1.15752-9/135023651_1074092183015941_1563172731779669106_n.png?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=FnrvCE_brEYAX8tBKR3&_nc_ht=scontent.fmnl17-2.fna&oh=486527436f55eae7a3730f881c566371&oe=60145758 "Code Button")
