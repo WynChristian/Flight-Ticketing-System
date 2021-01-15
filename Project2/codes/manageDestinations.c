@@ -400,25 +400,31 @@ void manageDestination(FILE *file,
     // if '1', then invoke `addDest` Function
     addDest(file, arrayCategories, total, false);
     manageDestination(file, arrayCategories, total);
+    break;
   case '2':
     // if '2', then invoke `editDest` Function
     editDest(file, arrayCategories, *total, false);
     manageDestination(file, arrayCategories, total);
+    break;
   case '3':
     // if '3', then invoke `deleteDest` Function
     deleteDest(file, arrayCategories, total, false);
     manageDestination(file, arrayCategories, total);
+    break;
   case '4':
     // if '4', then invoke `displayDest` Function
     displayDest(arrayCategories, *total);
     manageDestination(file, arrayCategories, total);
+    break;
   case '5':
     // if '5', then return to MAIN
-    return;
+    break;
   default:
     puts("Error, invalid input. try again");
     manageDestination(file, arrayCategories, total);
   }
+
+  return;
 }
 
 // This function initialize the values of the `arrayCategories` array
