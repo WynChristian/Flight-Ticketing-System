@@ -1,12 +1,20 @@
-/* Mga structs naman to men */
-/// Data type siya men na pinagsama samang ibang data type
-/// The way na a-access yung structs is by dot (.) or arrow (->) {kung pointer struct siya}
-/// like "reportTrack.totalReport;"
+/*
+  These are the collection of structs that are used throughout the whole program
+  Structures provide a way to group a set of related 
+    variables of diverse types into a single unit of memory. 
 
-/// yung typedef naman ay pang simplifyer lang siya
-/// para mas maikli ang pag initialize ng structs
-/// e.g.
-/// "SalesReport reportTrack;" instead of "struct salesReport reportTrack;"
+  The structure as a whole can be referenced by a single name or pointer; 
+    the structure members can be accessed individually too. 
+
+  Structures can be passed to functions and returned from functions. 
+  They are defined using the keyword `struct`
+
+  Combining `typedef` with `struct` can make code clearer. 
+
+  When you have a variable containing a struct, you can access its fields using the dot operator (.).
+  If you have a pointer to a struct, You have to use the arrow operator (->) to access its fields. 
+ */
+
 typedef struct category Category;       // For Destination categories
 typedef struct info Information;        // For database of current program
 typedef struct currentUser CurrentUser; // For current user's info
