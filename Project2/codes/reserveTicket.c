@@ -101,7 +101,7 @@ void promptUserAdultMembers(int *result, int *answer,
 } // promptUserAdultMembers Function
 
 // It prompts the user about each ages for each adult members
-void propmtUserAdultAges(int *result, int *answer,
+void promptUserAdultAges(int *result, int *answer,
                          int *members, Database (*datas)[])
 {
   // A loop to track the total prompts of ages
