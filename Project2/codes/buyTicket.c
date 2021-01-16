@@ -414,6 +414,8 @@ void buyNonReservedTicket(Documents *files, Information (*arrayCategories)[],
                           char *transactionFilePath, char *reportFilePath,
                           int *total, int maxTransaction)
 {
+  system("cls");
+
   // Display the current available destinations
   puts("FLIGHT DESTINATION\n");
   for (int i = 0; i < *total; i++)
@@ -645,6 +647,8 @@ void buyReservedTicket(Documents *files,
                        char *transactionFilePath,
                        char *reportFilePath)
 {
+  system("cls");
+
   int code;
   int result;
 

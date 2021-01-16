@@ -3,4 +3,4 @@ Project2/main.exe
 Project2/main.o
 Project2/assets/historyTransaction.txt
 Project2/assets/salesReport.txt
-Project2/assets/destination.txt
+Project2\assets\destination.txt
