@@ -97,12 +97,15 @@ void readAllDest(FILE *file, int *total, Information (*categories)[])
 // this function adds destination in the `destinationFile`
 void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool checkBuffer)
 {
+  system("cls");
+
   //  checks if the buffer has some value
   if (checkBuffer)
   {
     char someBuffer[10];
     scanf("%s", &someBuffer);
     checkBuffer = false;
+    printf("\nPlease enter valid input");
   }
 
   int result;
@@ -116,7 +119,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   // Prompt the user a new destination
   printf("\nEnter new destination(No space): ");
   result = scanf("%s", tempDest);
-  while (!result)
+  if (!result)
   {
     puts("\nPlease Enter valid input");
     return addDest(file, arrayCategories, total, true);
@@ -129,7 +132,6 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   result = scanf("%d", &tempPrice);
   while (!result)
   {
-    puts("\nPlease Enter valid input");
     return addDest(file, arrayCategories, total, true);
   }
 
@@ -138,13 +140,12 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   result = scanf("%d", &tempTax);
   if (!result)
   {
-    puts("\nPlease Enter valid input");
     return addDest(file, arrayCategories, total, true);
   }
 
   // Request the user to proceed
   char answer;
-  printf("SAVE this RECORD(y/n)?");
+  printf("\nSAVE this RECORD(y/n)?");
   answer = getch();
   if (answer == 'y' || answer == 'Y')
   {
@@ -181,12 +182,14 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
 // It updates the existing category's price
 void editDest(FILE *file, Information (*arrayCategories)[], int total, bool checkBuffer)
 {
+  system("cls");
   // checks if the buffer has some irrelevant values
   if (checkBuffer)
   {
     char someBuffer[10];
     scanf("%s", &someBuffer);
     checkBuffer = false;
+    printf("\nPlease Enter valid input");
   }
 
   int code;
@@ -196,13 +199,10 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
   result = scanf("%d", &code);
   if (!result)
   {
-    puts("\nplease enter valid input with format (###)");
     return editDest(file, arrayCategories, total, true);
   }
   if (code > total || code < 0)
   {
-    puts("Invalid code, can't be found");
-    puts("The Destination code is based on their number index");
     return editDest(file, arrayCategories, total, false);
   }
 
@@ -216,7 +216,6 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
   result = scanf("%d", &newPrice);
   if (!result)
   {
-    puts("\nplease enter valid input with format (###)");
     return editDest(file, arrayCategories, total, true);
   }
 
@@ -259,12 +258,14 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
 // It removes the existing category and update the arrays
 void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool checkBuffer)
 {
+  system("cls");
   // checks if the buffer has some value
   if (checkBuffer)
   {
     char someBuffer[10];
     scanf("%s", &someBuffer);
     checkBuffer = false;
+    puts("\nPlease enter valid input ");
   }
 
   // Prompts the user to enter the dest code
@@ -274,13 +275,10 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
   result = scanf("%d", &code);
   if (!result)
   {
-    puts("\nplease enter valid input with format (###)");
     return deleteDest(file, arrayCategories, total, true);
   }
   if (code > *total || code < 0)
   {
-    puts("Invalid code, can't be found");
-    puts("The Destination code is based on their number index");
     return deleteDest(file, arrayCategories, total, false);
   }
   int index = code - 1;
@@ -329,7 +327,7 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
   }
 
   // Ask the user to edit another record
-  puts("\nEdit another record[y/n]?");
+  puts("\nDelete another record[y/n]?");
   answer = getch();
   if (answer == 'y' || answer == 'Y')
   {
