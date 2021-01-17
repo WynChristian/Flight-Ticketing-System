@@ -25,6 +25,6 @@
 
 > Just find the `main.c`:open_file_folder: file in any project, that's our main file.
 ---
-> **If you're not my *partner***, please don't copy it. Just take this as an **idea** for your own project. :grinning:
+> **If you're not my *group member***, please don't copy it. Just take this as an **idea** for your own project. :grinning:
 
 > Let's do our best to **learn and to improve our skills**, as well as **helping each other**. :v: :v:
