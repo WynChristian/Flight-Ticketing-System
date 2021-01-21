@@ -205,8 +205,6 @@ void promptChildren(Transactions (*arrayTransaction)[],
     return;
   }
 
-  // Display the current no. of members
-  printf("\ncurrent *numMembers (propmtChildren) = %d", *numMembers);
   int result;
   int answer = 0;
 
