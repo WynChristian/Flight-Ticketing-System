@@ -17,11 +17,12 @@
 
 typedef struct category Category; // For Destination categories
 typedef struct info Information;  // For database of current program
-typedef struct report Report;
+typedef struct report Report;     // For Sales Report
 
+// For tracking Transactions
 typedef struct currentData CurrentData;
-typedef struct Database CurrentOutput;
 typedef struct Database Database;
+typedef struct Database CurrentOutput;
 typedef struct Database Transactions;
 
 struct category
