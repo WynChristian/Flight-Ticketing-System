@@ -28,7 +28,6 @@
 
 int main(void)
 {
-  Documents Files;
   Information allCategories[TOTAL]; // to track the current data in `destinationsFile`
   Report salesReports[TOTAL];       // To track the sales report
 
@@ -38,18 +37,15 @@ int main(void)
   unsigned int totalCountry = 0;
 
   // Get the information in the `destinationFile`
-  readAllDest(Files.getDestinations, &numCategories, &allCategories);
+  readAllDest(&numCategories, &allCategories);
 
   // Initialize the values in `salesReport` array with 0
   initialize(&allCategories, &salesReports, &numCategories,
-             &totalCountry, transactionsFile);
+             &totalCountry);
 
   // Start the main program
-  displayMainMenu(&Files, &allCategories, &salesReports,
-                  &numCategories, MAXMEMBERS,
-                  databaseRootFile, &totalCountry,
-                  transactionsFile, reportFile,
-                  MAXTRANSACTION);
+  displayMainMenu(&allCategories, &salesReports,
+                  &numCategories, &totalCountry);
 
   return 0;
 } // main Function

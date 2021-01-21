@@ -65,7 +65,7 @@ void calculatePrices(Database (*datas)[], int total, float *price)
 
 // It prompts the user about the no. of adult members
 void promptUserAdultMembers(int *result, int *answer,
-                            int *members, int totalMembers)
+                            int *members)
 {
   *result = 0;
   *answer = 0;
@@ -75,11 +75,11 @@ void promptUserAdultMembers(int *result, int *answer,
   *result = scanf("%d", answer);
 
   // check the input validity
-  while (!(*result) || *answer < 0 || *answer > totalMembers)
+  while (!(*result) || *answer < 0 || *answer > MAXMEMBERS)
   {
-    if (*answer > totalMembers)
+    if (*answer > MAXMEMBERS)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", totalMembers);
+      printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
       printf("\nHow many adults: ");
       *result = scanf("%d", answer);
       break;
@@ -139,12 +139,11 @@ void promptUserAdultAges(int *result, int *answer,
 
 // It prompts the user about how many children
 void promptUserChildren(int *result, int *answer,
-                        int *members, int *beforeMembers,
-                        int totalMembers)
+                        int *members, int *beforeMembers)
 {
   // if the no. of members reach the maximum no. of members
   //   return to the `reserveTicket` function
-  if (*members == totalMembers)
+  if (*members == MAXMEMBERS)
     return;
 
   *result = 0;
@@ -156,16 +155,16 @@ void promptUserChildren(int *result, int *answer,
   int tempTotalMembers = (*members) + *answer;
 
   // check the input data validity
-  while (!(*result) || *answer < 0 || *answer > totalMembers || tempTotalMembers > totalMembers)
+  while (!(*result) || *answer < 0 || *answer > MAXMEMBERS || tempTotalMembers > MAXMEMBERS)
   {
-    if (tempTotalMembers < totalMembers)
+    if (tempTotalMembers < MAXMEMBERS)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", totalMembers);
-      printf("\nAvailable reservation = %d", totalMembers - *members);
+      printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
+      printf("\nAvailable reservation = %d", MAXMEMBERS - *members);
     }
-    if (*answer > totalMembers)
+    if (*answer > MAXMEMBERS)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", totalMembers);
+      printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
       printf("\nHow many adults: ");
       *result = scanf("%d", answer);
       break;
@@ -189,11 +188,11 @@ void promptUserChildren(int *result, int *answer,
 // It prompts the user about the age for each children members
 void promptUserChildrenAges(int *result, int *answer,
                             int *members, int *beforeMembers,
-                            Database (*datas)[], int totalMembers)
+                            Database (*datas)[])
 {
   // If the current no. of members reach the maximum no. of reservation members
   //    return to `reserveTicket` function
-  if (*members == totalMembers)
+  if (*members == MAXMEMBERS)
     return;
 
   int totalChild = *answer;
@@ -328,9 +327,8 @@ void storeData(char *sampleFilePath, char *currentCountry,
 } // storeData Function
 
 // It is the main function of the current file
-void reserveTicket(char *databaseFile,
-                   Information (*arrayCategories)[],
-                   int *total, int totalPassenger)
+void reserveTicket(Information (*arrayCategories)[],
+                   int *total)
 {
   system("cls");
 
@@ -378,13 +376,13 @@ void reserveTicket(char *databaseFile,
   tempPrice = (float)(*arrayCategories)[answer - 1].price;
 
   // Prompt the user about adults no. of members and their ages
-  promptUserAdultMembers(&result, &answer, &members, totalPassenger);
+  promptUserAdultMembers(&result, &answer, &members);
   promptUserAdultAges(&result, &answer, &members, &reservedDATA);
 
   int adultMembers;
   // Prompt the user about children no. of members and their ages
-  promptUserChildren(&result, &answer, &members, &adultMembers, totalPassenger);
-  promptUserChildrenAges(&result, &answer, &members, &adultMembers, &reservedDATA, totalPassenger);
+  promptUserChildren(&result, &answer, &members, &adultMembers);
+  promptUserChildrenAges(&result, &answer, &members, &adultMembers, &reservedDATA);
 
   // Display the total prices with discount
   calculatePrices(&reservedDATA, members, &tempPrice);
@@ -397,7 +395,7 @@ void reserveTicket(char *databaseFile,
     // Generate a file with a unique `random code`
     do
     {
-      strcpy(root, databaseFile);
+      strcpy(root, databaseRootFile);
       random = generateRandom();
       generateFilePath(root, random);
     } while (checkFilePath(root));

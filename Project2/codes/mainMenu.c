@@ -6,13 +6,9 @@
     * arrayReports
     * currentNumCategories
  */
-void displayMainMenu(Documents *files,
-                     Information (*arrayCategories)[],
+void displayMainMenu(Information (*arrayCategories)[],
                      Report (*arrayReports)[],
-                     int *currentNumCategories, int maxMembers,
-                     char *dataRootFile, int *totalCountries,
-                     char *transactionFilePath,
-                     char *reportFilePath, int maxTransaction)
+                     int *currentNumCategories, int *totalCountries)
 {
   // Clear screen
   system("cls");
@@ -38,57 +34,44 @@ void displayMainMenu(Documents *files,
   {
   case '1':
     // if 1, then call the `manageDestination` function from `codes/manageDestination.c` file
-    manageDestination(files->getDestinations,
-                      arrayCategories, currentNumCategories);
+    manageDestination(arrayCategories, currentNumCategories);
 
-    displayMainMenu(files, arrayCategories,
+    displayMainMenu(arrayCategories,
                     arrayReports, currentNumCategories,
-                    maxMembers, dataRootFile,
-                    totalCountries, transactionFilePath,
-                    reportFilePath, maxTransaction);
+                    totalCountries);
 
   case '2':
     // if 2, then call the `reserveTicket` function from `codes/reserveTicket.c` file
-    reserveTicket(dataRootFile, arrayCategories,
-                  currentNumCategories, maxMembers);
+    reserveTicket(arrayCategories,
+                  currentNumCategories);
 
-    displayMainMenu(files, arrayCategories,
+    displayMainMenu(arrayCategories,
                     arrayReports, currentNumCategories,
-                    maxMembers, dataRootFile,
-                    totalCountries, transactionFilePath,
-                    reportFilePath, maxTransaction);
+                    totalCountries);
   case '3':
     // if 3, then call the `buyTicket` function from `codes/buyTicket.c` file
-    buyTicket(files, arrayCategories,
+    buyTicket(arrayCategories,
               arrayReports, currentNumCategories,
-              dataRootFile, totalCountries,
-              transactionFilePath, reportFilePath,
-              maxTransaction);
+              totalCountries);
 
-    displayMainMenu(files, arrayCategories,
+    displayMainMenu(arrayCategories,
                     arrayReports, currentNumCategories,
-                    maxMembers, dataRootFile,
-                    totalCountries, transactionFilePath,
-                    reportFilePath, maxTransaction);
+                    totalCountries);
   case '4':
     // if 4, then call the `displaySalesReport` function from `codes/displayReport.c` file
     displaySalesReport(arrayReports, *totalCountries);
 
-    displayMainMenu(files, arrayCategories,
+    displayMainMenu(arrayCategories,
                     arrayReports, currentNumCategories,
-                    maxMembers, dataRootFile,
-                    totalCountries, transactionFilePath,
-                    reportFilePath, maxTransaction);
+                    totalCountries);
   case '5':
     // if 5, stop executing the program
     exit(0);
   default:
     // if its invalid input, display the error and return to Main
     puts("Error, invalid input. try again");
-    displayMainMenu(files, arrayCategories,
+    displayMainMenu(arrayCategories,
                     arrayReports, currentNumCategories,
-                    maxMembers, dataRootFile,
-                    totalCountries, transactionFilePath,
-                    reportFilePath, maxTransaction);
+                    totalCountries);
   }
 } // displayMainMenu Function

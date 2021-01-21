@@ -30,22 +30,22 @@
 
 // It updates the `reportFile` text file to track the information
 //   of the current executing program
-void updateSalesReport(Documents *files, char *reportFilePath, Report (*arrayReports)[], int totalCountries)
+void updateSalesReport(Report (*arrayReports)[], int totalCountries)
 {
   // Overwrite the `reportFile` text file with an updated information
   //    which is in the `arrayReports` array
-  files->salesReport = fopen(reportFilePath, "w+");
-  fprintf(files->salesReport, "%-15s %-10s %-10s %8s\n\n", "Flight", "Quantity", "Amount", "Trave Tax");
+  FILE *file = fopen(reportFile, "w+");
+  fprintf(file, "%-15s %-10s %-10s %8s\n\n", "Flight", "Quantity", "Amount", "Trave Tax");
 
   // write all the updated informations
   for (int i = 0; i < totalCountries; i++)
   {
-    fprintf(files->salesReport, "%-14s %-9d %-10.2f %.2f\n",
+    fprintf(file, "%-14s %-9d %-10.2f %.2f\n",
             (*arrayReports)[i].country, (*arrayReports)[i].quantity,
             (*arrayReports)[i].amount, (*arrayReports)[i].tax);
   } // for Loop
 
-  fclose(files->salesReport);
+  fclose(file);
   return;
 } // updateSalesReport Function
 
@@ -76,22 +76,22 @@ int checkCountry(char *country, Report (*arrayReports)[], int *totalCountries)
 
 // It prompts the user about no. of adults members
 //   while tracking the no. of members per transaction
-void promptAdult(int *numMembers, int maxTransaction)
+void promptAdult(int *numMembers)
 {
   int result = 0;
   int answer = 0;
 
   // Prompt the user about the no. of adults members
-  printf("\nHow many adult/s(18+ y.o)(max: %d): ", maxTransaction);
+  printf("\nHow many adult/s(18+ y.o)(max: %d): ", MAXTRANSACTION);
   result = scanf(" %d", &answer);
 
   // Check the input data validity
-  while (!result || answer < 0 || answer > maxTransaction)
+  while (!result || answer < 0 || answer > MAXTRANSACTION)
   {
-    while (answer > maxTransaction)
+    while (answer > MAXTRANSACTION)
     {
-      printf("\nSorry, we can transact for maximum of %d members only per transaction", maxTransaction);
-      printf("\nHow many adults(max: %d): ", maxTransaction);
+      printf("\nSorry, we can transact for maximum of %d members only per transaction", MAXTRANSACTION);
+      printf("\nHow many adults(max: %d): ", MAXTRANSACTION);
       result = scanf(" %d", &answer);
       break;
     }
@@ -101,7 +101,7 @@ void promptAdult(int *numMembers, int maxTransaction)
       char removeBuffer[100];
       scanf("%s", removeBuffer);
     }
-    printf("\nHow many adults(max: %d): ", maxTransaction);
+    printf("\nHow many adults(max: %d): ", MAXTRANSACTION);
     result = scanf(" %d", &answer);
   } // while Loop
 
@@ -196,12 +196,11 @@ void promptChildrenAges(Transactions (*arrayTransaction)[],
 
 // It prompts the user about the no. of childrens
 void promptChildren(Transactions (*arrayTransaction)[],
-                    Information *category, int *numMembers,
-                    int maxTransaction)
+                    Information *category, int *numMembers)
 {
   // If the no. of members reach the maximum no. of members per transaction,
   //   then return to the `buyTicket` function
-  if (*numMembers == maxTransaction)
+  if (*numMembers == MAXTRANSACTION)
   {
     return;
   }
@@ -212,16 +211,16 @@ void promptChildren(Transactions (*arrayTransaction)[],
   int answer = 0;
 
   // Prompt the user about the no. of children
-  printf("\nHow many children(17-)(max: %d, current %d): ", maxTransaction, *numMembers);
+  printf("\nHow many children(17-)(max: %d, current %d): ", MAXTRANSACTION, *numMembers);
   result = scanf(" %d", &answer);
 
   // Check the input data validity
-  while (!result || answer < 0 || answer > maxTransaction)
+  while (!result || answer < 0 || answer > MAXTRANSACTION)
   {
-    while (answer > maxTransaction - *numMembers)
+    while (answer > MAXTRANSACTION - *numMembers)
     {
-      printf("\nSorry, we can transact for maximum of %d members only per transaction", maxTransaction);
-      printf("\nNo. of available: %d", maxTransaction - *numMembers);
+      printf("\nSorry, we can transact for maximum of %d members only per transaction", MAXTRANSACTION);
+      printf("\nNo. of available: %d", MAXTRANSACTION - *numMembers);
       printf("\nHow many children(17-): ");
       result = scanf(" %d", &answer);
       break;
@@ -249,14 +248,14 @@ void promptChildren(Transactions (*arrayTransaction)[],
 // It invokes(calls) the three(3) function, consecutively for transaction
 void promptUserTransaction(Information *category,
                            Transactions (*arrayTransaction)[],
-                           int maxTransaction, int *totalMembers)
+                           int *totalMembers)
 {
   // For adults
-  promptAdult(totalMembers, maxTransaction);
+  promptAdult(totalMembers);
   promptAdultAges(arrayTransaction, totalMembers, category);
 
   //For childrens
-  promptChildren(arrayTransaction, category, totalMembers, maxTransaction);
+  promptChildren(arrayTransaction, category, totalMembers);
 
   return;
 } // promptUserTransaction Function
@@ -304,12 +303,11 @@ int proceedTransaction(bool checkBuffer)
 }
 
 // It appends the current transactions in the `filePath` text file
-void appendTransactionNonReserved(Documents *files,
-                                  Transactions (*transactionsList)[],
+void appendTransactionNonReserved(Transactions (*transactionsList)[],
                                   Information *category,
-                                  int *totalMember, char *filePath)
+                                  int *totalMember)
 {
-  files->appendTransaction = fopen(filePath, "a");
+  FILE *file = fopen(transactionsFile, "a");
 
   // Loop through each `transactionList` array indeces to get their
   //   information of each transactions
@@ -317,21 +315,21 @@ void appendTransactionNonReserved(Documents *files,
   {
     float price = (*transactionsList)[i].price;
     float tax = price * category->tax;
-    fprintf(files->appendTransaction, "\n%- 12s %-7d %-15.2f %.2f",
+    fprintf(file, "\n%- 12s %-7d %-15.2f %.2f",
             category->country, (*transactionsList)[i].age,
             (*transactionsList)[i].price, tax);
   } // for Loop
 
-  fclose(files->appendTransaction);
+  fclose(file);
   return;
 } // appendTransactionNonReserved Function
 
 // It updates the index of `arrayReports` to store the informations from `transacitonList` array
-void updateSalesReportNonReserved(Documents *files, Report (*arrayReports)[],
+void updateSalesReportNonReserved(Report (*arrayReports)[],
                                   Transactions (*transactionsList)[],
                                   Information *category,
                                   int index, int *totalMembers,
-                                  int *totalCountries, char *reportFilePath)
+                                  int *totalCountries)
 {
   float totalPrice = 0;
   float tax = category->tax;
@@ -346,15 +344,14 @@ void updateSalesReportNonReserved(Documents *files, Report (*arrayReports)[],
   (*arrayReports)[index].tax += (totalPrice * tax);
 
   // Invoke the `updateSalesReport` function to overwrite the new information
-  updateSalesReport(files, reportFilePath, arrayReports, *totalCountries);
+  updateSalesReport(arrayReports, *totalCountries);
   return;
 } // updateSalesReportNonReserved Function
 
 // It stores the `transactionList` array's data into `arrayReport` array to track informations
-void storeTransactionData(Documents *files, Report (*arrayReport)[],
+void storeTransactionData(Report (*arrayReport)[],
                           Information *category, Transactions (*transactionsList)[],
-                          int *totalMember, int *totalCountries,
-                          char *transactionFilePath, char *reportFilePath)
+                          int *totalMember, int *totalCountries)
 {
   int index;
   int output;
@@ -379,15 +376,14 @@ void storeTransactionData(Documents *files, Report (*arrayReport)[],
   }
 
   // Add the transactions in the `transactionFilePath` text file
-  appendTransactionNonReserved(files, transactionsList,
-                               category, totalMember,
-                               transactionFilePath);
+  appendTransactionNonReserved(transactionsList,
+                               category, totalMember);
 
   // Update the `arrayReport` array and overwrite the `reportFilePath` text file
   //   to track changes in the current program
-  updateSalesReportNonReserved(files, arrayReport, transactionsList,
+  updateSalesReportNonReserved(arrayReport, transactionsList,
                                category, index, totalMember,
-                               totalCountries, reportFilePath);
+                               totalCountries);
 }
 
 // It display the total price of current non reserved transaction
@@ -409,10 +405,9 @@ void displayPrice(Transactions (*transactionList)[], int totalMember)
 // This is the "No Reservation" category from "Buy Ticket" menu
 // It prompt the user which destination to choose and tracks the information
 //    about the non-reservation transaction
-void buyNonReservedTicket(Documents *files, Information (*arrayCategories)[],
+void buyNonReservedTicket(Information (*arrayCategories)[],
                           int *totalCountries, Report (*arrayReport)[],
-                          char *transactionFilePath, char *reportFilePath,
-                          int *total, int maxTransaction)
+                          int *total)
 {
   system("cls");
 
@@ -454,7 +449,7 @@ void buyNonReservedTicket(Documents *files, Information (*arrayCategories)[],
   int totalMember = 0;
 
   // Prompts the user about the transaction
-  promptUserTransaction(&tempCategory, &transactionList, maxTransaction, &totalMember);
+  promptUserTransaction(&tempCategory, &transactionList, &totalMember);
 
   // Display the total amount of current transaction
   displayPrice(&transactionList, totalMember);
@@ -464,10 +459,9 @@ void buyNonReservedTicket(Documents *files, Information (*arrayCategories)[],
   {
     // if yes, then update the `transactionFilePath` and `reportFilePath` text files,
     //   and the `arrayReport` array to track the informations
-    storeTransactionData(files, arrayReport, &tempCategory,
+    storeTransactionData(arrayReport, &tempCategory,
                          &transactionList, &totalMember,
-                         totalCountries, transactionFilePath,
-                         reportFilePath);
+                         totalCountries);
   }
 
   return;
@@ -476,18 +470,17 @@ void buyNonReservedTicket(Documents *files, Information (*arrayCategories)[],
 // --------------------- For Reserved Ticket -------------------------
 
 // It appends the `filePath` text file with a data from `currentOutput` and `category`
-void appendTransactionReserved(Documents *files, char *filePath,
-                               CurrentData *category,
+void appendTransactionReserved(CurrentData *category,
                                CurrentOutput *currentOutput)
 {
   float price = currentOutput->price;
   float tax = price * category->tax * 0.01;
-  files->appendTransaction = fopen(filePath, "a");
+  FILE *file = fopen(transactionsFile, "a");
 
   // Append the current reserved transaction in the `filePath` text file
-  fprintf(files->appendTransaction, "\n%-11s %-7d %-15.2f %.2f",
+  fprintf(file, "\n%-11s %-7d %-15.2f %.2f",
           category->country, currentOutput->age, currentOutput->price, tax);
-  fclose(files->appendTransaction);
+  fclose(file);
 
   return;
 } // appendTransactionReserved Function
@@ -495,8 +488,7 @@ void appendTransactionReserved(Documents *files, char *filePath,
 // It updates the `arrayReport` array to track the data of the current transaction
 void updateSalesReportReserved(Report (*arrayReports)[], int index,
                                int tax, CurrentOutput *currentoutput,
-                               int *totalCountries, char *reportFilePath,
-                               Documents *files)
+                               int *totalCountries)
 {
   float finalTax = currentoutput->price * (tax * 0.01);
 
@@ -507,7 +499,7 @@ void updateSalesReportReserved(Report (*arrayReports)[], int index,
 
   // Invoke the `updateSalesReport` function to overwrite the `reportFilePath` text file
   //   with an updated `arrayReports` infomation
-  updateSalesReport(files, reportFilePath, arrayReports, *totalCountries);
+  updateSalesReport(arrayReports, *totalCountries);
 }
 
 // It reads the data from `data` file, stores the current data
@@ -540,23 +532,22 @@ int scanData(FILE *data, CurrentOutput *currentdata)
 
 // It stores the reserved transactions data from `filePath` text file into the `arrayReports`,
 //    then update the `transactionFilePath` text file, and the `reportFilePath` text file
-void storeCodeData(Documents *files, char *filePath,
-                   int *totalCountries, Report (*arrayReports)[],
-                   char *transactionFilePath, char *reportFilePath)
+void storeCodeData(char *filePath,
+                   int *totalCountries, Report (*arrayReports)[])
 {
   // To track current datas
   CurrentData current;
   CurrentOutput currentoutput;
 
   // Get the three(3) data (selected country, tax, no. of transaction) and store it in `current` struct
-  files->reservedData = fopen(filePath, "r");
-  int result = fscanf(files->reservedData, "%s %d %d",
+  FILE *file = fopen(filePath, "r");
+  int result = fscanf(file, "%s %d %d",
                       current.country, &current.tax, &current.total);
 
   // check the text file data validity
   if (result != 3)
   {
-    fclose(files->reservedData);
+    fclose(file);
     printf("\nProblem with reading the data");
     return;
   }
@@ -581,19 +572,17 @@ void storeCodeData(Documents *files, char *filePath,
     (*arrayReports)[index].tax = 0;
   }
 
-  // Scan (line by line) the data of `files->reservedData` text file
+  // Scan (line by line) the data of `file` text file
   //   and store the current data in the `currentouput`
-  while (scanData(files->reservedData, &currentoutput))
+  while (scanData(file, &currentoutput))
   {
     // Invoke `appendTransactionReserved` function to append the current data
-    appendTransactionReserved(files, transactionFilePath,
-                              &current, &currentoutput);
+    appendTransactionReserved(&current, &currentoutput);
 
     // Invoke `updateSalesReportReserved` function to update the `arrayReports`
     //   and overwrite the `reportFilePath` text file with the current data
     updateSalesReportReserved(arrayReports, index, current.tax,
-                              &currentoutput, totalCountries,
-                              reportFilePath, files);
+                              &currentoutput, totalCountries);
   }
 
   // after storing the data from "reserved transaction," Delete the `filePath` text file
@@ -640,12 +629,9 @@ int proceedPayment(bool checkBuffer)
 // It prompt the user to enter the reservation code,
 //   analyze the code if it exist, then ask the user to
 //   proceed to buy the reserved ticket
-void buyReservedTicket(Documents *files,
-                       Information (*arrayCategories)[],
-                       char *dataRootFile, int *totalCountries,
-                       Report (*arrayReport)[],
-                       char *transactionFilePath,
-                       char *reportFilePath)
+void buyReservedTicket(Information (*arrayCategories)[],
+                       int *totalCountries,
+                       Report (*arrayReport)[])
 {
   system("cls");
 
@@ -668,7 +654,7 @@ void buyReservedTicket(Documents *files,
   }
 
   char codeFilePath[100];
-  strcpy(codeFilePath, dataRootFile);
+  strcpy(codeFilePath, databaseRootFile);
 
   // generate the file path with the current `code`
   generateFilePath(codeFilePath, code);
@@ -677,10 +663,9 @@ void buyReservedTicket(Documents *files,
   if (!checkFilePath(codeFilePath))
   {
     printf("\nThe Code (%d) doesn't exist", code);
-    return buyReservedTicket(files, arrayCategories,
-                             dataRootFile, totalCountries,
-                             arrayReport, transactionFilePath,
-                             reportFilePath);
+    return buyReservedTicket(arrayCategories,
+                             totalCountries,
+                             arrayReport);
   }
 
   // Prompt the user to proceed the payment of reserved ticket
@@ -691,14 +676,14 @@ void buyReservedTicket(Documents *files,
     //    then update the `arrayReport` array
     //    then append the `transactionFilePath` text file
     //    and then overwrite the `reportFilePath` text file to track changes
-    storeCodeData(files, codeFilePath, totalCountries, arrayReport, transactionFilePath, reportFilePath);
+    storeCodeData(codeFilePath, totalCountries, arrayReport);
   }
 
   // Return to "Buy Ticket" menu
   puts("\nPress any KEY to RETURN");
   char some = getch();
   return;
-} //
+} // buyReservedTicket Function
 
 // ----------------------------- Buy Ticket MENU --------------------------
 
@@ -706,11 +691,9 @@ void buyReservedTicket(Documents *files,
 // It prompts the user to choose which kind of transaction
 //    should be used, either "Reserved" or "No reservation"
 // It uses `arrayReports` to track the transaction informations
-void buyTicket(Documents *files, Information (*arrayCategories)[],
+void buyTicket(Information (*arrayCategories)[],
                Report (*arrayReports)[], unsigned int *total,
-               char *dataRootFile, int *totalCountries,
-               char *transactionFilePath, char *reportFilePath,
-               int maxTransaction)
+               int *totalCountries)
 {
   system("cls");
 
@@ -735,31 +718,26 @@ void buyTicket(Documents *files, Information (*arrayCategories)[],
   {
   case '1':
     // if 1, then invoke `buyReservedTicket` function
-    buyReservedTicket(files, arrayCategories,
-                      dataRootFile, totalCountries,
-                      arrayReports, transactionFilePath,
-                      reportFilePath);
+    buyReservedTicket(arrayCategories,
+                      totalCountries,
+                      arrayReports);
 
-    buyTicket(files, arrayCategories, arrayReports,
-              total, dataRootFile, totalCountries,
-              transactionFilePath, reportFilePath, maxTransaction);
+    buyTicket(arrayCategories, arrayReports,
+              total, totalCountries);
   case '2':
     // if 2, then invoke `buyNonReservedTicket` function
-    buyNonReservedTicket(files, arrayCategories,
+    buyNonReservedTicket(arrayCategories,
                          totalCountries, arrayReports,
-                         transactionFilePath, reportFilePath,
-                         total, maxTransaction);
+                         total);
 
-    buyTicket(files, arrayCategories, arrayReports,
-              total, dataRootFile, totalCountries,
-              transactionFilePath, reportFilePath, maxTransaction);
+    buyTicket(arrayCategories, arrayReports,
+              total, totalCountries);
   case '3':
     // if '3', then return to MAIN MENU
     return;
   default:
     puts("Error, invalid input. try again");
-    buyTicket(files, arrayCategories, arrayReports,
-              total, dataRootFile, totalCountries,
-              transactionFilePath, reportFilePath, maxTransaction);
+    buyTicket(arrayCategories, arrayReports,
+              total, totalCountries);
   } // switch-case conditions
 } // buyTicket Function

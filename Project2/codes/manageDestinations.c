@@ -71,10 +71,10 @@ void recordDest(Category *category, int index,
 
 // This function will try to analyze and store
 // the data in `destinationFile` to `categories` array
-void readAllDest(FILE *file, int *total, Information (*categories)[])
+void readAllDest(int *total, Information (*categories)[])
 {
   *total = 0;
-  file = fopen(destinationsFile, "r");
+  FILE *file = fopen(destinationsFile, "r");
   if (!file)
   {
     printf("\aError opening %s file\n", destinationsFile);
@@ -95,7 +95,7 @@ void readAllDest(FILE *file, int *total, Information (*categories)[])
 } // readAllDest Function
 
 // this function adds destination in the `destinationFile`
-void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool checkBuffer)
+void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
 {
   system("cls");
 
@@ -122,7 +122,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   if (!result)
   {
     puts("\nPlease Enter valid input");
-    return addDest(file, arrayCategories, total, true);
+    return addDest(arrayCategories, total, true);
   }
 
   result = 0;
@@ -132,7 +132,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   result = scanf("%d", &tempPrice);
   while (!result)
   {
-    return addDest(file, arrayCategories, total, true);
+    return addDest(arrayCategories, total, true);
   }
 
   // Prompt the user a new travel tax
@@ -140,7 +140,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   result = scanf("%d", &tempTax);
   if (!result)
   {
-    return addDest(file, arrayCategories, total, true);
+    return addDest(arrayCategories, total, true);
   }
 
   // Request the user to proceed
@@ -151,7 +151,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   {
     int index = *total;
     // Append the data in the file
-    file = fopen(destinationsFile, "a");
+    FILE *file = fopen(destinationsFile, "a");
     fprintf(file, "\n%-10s %10d %d%%", tempDest, tempPrice, tempTax);
     fclose(file);
 
@@ -168,7 +168,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
   answer = getch();
   if (answer == 'y' || answer == 'Y')
   {
-    return addDest(file, arrayCategories, total, false);
+    return addDest(arrayCategories, total, false);
   }
   else if (answer == 'n' || answer == 'N')
   {
@@ -180,7 +180,7 @@ void addDest(FILE *file, Information (*arrayCategories)[], int *total, bool chec
 } // addDest Function
 
 // It updates the existing category's price
-void editDest(FILE *file, Information (*arrayCategories)[], int total, bool checkBuffer)
+void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
 {
   system("cls");
   // checks if the buffer has some irrelevant values
@@ -199,11 +199,11 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
   result = scanf("%d", &code);
   if (!result)
   {
-    return editDest(file, arrayCategories, total, true);
+    return editDest(arrayCategories, total, true);
   }
   if (code > total || code < 0)
   {
-    return editDest(file, arrayCategories, total, false);
+    return editDest(arrayCategories, total, false);
   }
 
   int index = code - 1;
@@ -216,7 +216,7 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
   result = scanf("%d", &newPrice);
   if (!result)
   {
-    return editDest(file, arrayCategories, total, true);
+    return editDest(arrayCategories, total, true);
   }
 
   char answer;
@@ -231,7 +231,7 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
     (*arrayCategories)[index].price = newPrice;
 
     // Reprint all the data with the new update
-    file = fopen(destinationsFile, "w+");
+    FILE *file = fopen(destinationsFile, "w+");
     fprintf(file, "%-15s %s %s\n\n", "Destination", "Price per Destination", "Travel tax");
     for (int i = 0; i < total; i++)
     {
@@ -246,7 +246,7 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
   answer = getch();
   if (answer == 'y' || answer == 'Y')
   {
-    return editDest(file, arrayCategories, total, false);
+    return editDest(arrayCategories, total, false);
   }
   else if (answer == 'n' || answer == 'N')
   {
@@ -256,7 +256,7 @@ void editDest(FILE *file, Information (*arrayCategories)[], int total, bool chec
 } // editDest Function
 
 // It removes the existing category and update the arrays
-void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool checkBuffer)
+void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
 {
   system("cls");
   // checks if the buffer has some value
@@ -275,11 +275,11 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
   result = scanf("%d", &code);
   if (!result)
   {
-    return deleteDest(file, arrayCategories, total, true);
+    return deleteDest(arrayCategories, total, true);
   }
   if (code > *total || code < 0)
   {
-    return deleteDest(file, arrayCategories, total, false);
+    return deleteDest(arrayCategories, total, false);
   }
   int index = code - 1;
 
@@ -299,7 +299,7 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
     puts("\nDeleting this record...");
 
     // Reprint the `destinationsFile` headings
-    file = fopen(destinationsFile, "w+");
+    FILE *file = fopen(destinationsFile, "w+");
     fprintf(file, "%-15s %s %s\n\n", "Destination", "Price per Destination", "Travel tax");
 
     // A loop that updates the `arrayCategories` array
@@ -331,7 +331,7 @@ void deleteDest(FILE *file, Information (*arrayCategories)[], int *total, bool c
   answer = getch();
   if (answer == 'y' || answer == 'Y')
   {
-    return deleteDest(file, arrayCategories, total, false);
+    return deleteDest(arrayCategories, total, false);
   }
   else if (answer == 'n' || answer == 'N')
   {
@@ -368,9 +368,7 @@ void displayDest(Information (*arrayCategories)[], int total)
 
 // The main function in this file
 // It manage the information of `arrayCategories`
-void manageDestination(FILE *file,
-                       Information (*arrayCategories)[],
-                       int *total)
+void manageDestination(Information (*arrayCategories)[], int *total)
 {
   system("cls");
 
@@ -397,30 +395,30 @@ void manageDestination(FILE *file,
   {
   case '1':
     // if '1', then invoke `addDest` Function
-    addDest(file, arrayCategories, total, false);
-    manageDestination(file, arrayCategories, total);
+    addDest(arrayCategories, total, false);
+    manageDestination(arrayCategories, total);
     break;
   case '2':
     // if '2', then invoke `editDest` Function
-    editDest(file, arrayCategories, *total, false);
-    manageDestination(file, arrayCategories, total);
+    editDest(arrayCategories, *total, false);
+    manageDestination(arrayCategories, total);
     break;
   case '3':
     // if '3', then invoke `deleteDest` Function
-    deleteDest(file, arrayCategories, total, false);
-    manageDestination(file, arrayCategories, total);
+    deleteDest(arrayCategories, total, false);
+    manageDestination(arrayCategories, total);
     break;
   case '4':
     // if '4', then invoke `displayDest` Function
     displayDest(arrayCategories, *total);
-    manageDestination(file, arrayCategories, total);
+    manageDestination(arrayCategories, total);
     break;
   case '5':
     // if '5', then return to MAIN
     break;
   default:
     puts("Error, invalid input. try again");
-    manageDestination(file, arrayCategories, total);
+    manageDestination(arrayCategories, total);
   }
 
   return;
@@ -430,7 +428,7 @@ void manageDestination(FILE *file,
 //   and overwrite/create the `fileTransaction` with headers only
 void initialize(Information (*arrayCategories)[],
                 Report (*arrayReports)[], int *total,
-                int *totalCountry, char *fileTransaction)
+                int *totalCountry)
 {
   // A loop that gives a first value to each array indeces
   for (int i = 0; i < *total; i++)
@@ -442,8 +440,8 @@ void initialize(Information (*arrayCategories)[],
     *totalCountry += 1;
   }
 
-  // overwrite the `fileTransaction` with headers only
-  FILE *file = fopen(fileTransaction, "w");
+  // overwrite the `transactionsFile` with headers only
+  FILE *file = fopen(transactionsFile, "w");
   fprintf(file, "%-13s %-5s %-14s %s\n\n", "Destination", "Age", "Sales Amount", "Travel Tax");
   fclose(file);
 } // initialize Function
