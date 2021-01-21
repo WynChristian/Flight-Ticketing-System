@@ -621,6 +621,7 @@ void buyTicket(Information (*arrayCategories)[],
                int *totalCountries)
 {
   system("cls");
+  FLUSH;
 
   int result;
   char menu[4][100] = {

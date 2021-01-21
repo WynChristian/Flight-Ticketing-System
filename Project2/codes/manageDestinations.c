@@ -203,6 +203,7 @@ void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
 // Displays the current data in the `reportFile`
 void displayDest(Information (*arrayCategories)[], int total)
 {
+  system("cls");
   if (total == 0)
   {
     printf("\nSorry, there's no available flight right now...");
