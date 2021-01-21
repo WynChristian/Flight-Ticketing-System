@@ -1,8 +1,10 @@
 Destination     Price per Destination Travel tax
 
-USA               100000          10%
-France            1000            9%
-China             100             8%
-Japan             10000           15%
-TESTING           10000           12%
-TESTING           123             23%
+USA               123200               10%
+France            23000                9%
+China             13400                8%
+Japan             16000                15%
+Singapore         23400                13%
+London            24500                6%
+Korea             13400                14%
+Spain             34500                7%

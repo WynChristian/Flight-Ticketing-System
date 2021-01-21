@@ -1,2 +1,4 @@
 Destination   Age   Sales Amount   Travel Tax
 
+
+Singapore    23      23400.00        3042.00
