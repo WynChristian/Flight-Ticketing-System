@@ -64,98 +64,93 @@ void calculatePrices(Database (*datas)[], int total, float *price)
 } // calculatePrices Function
 
 // It prompts the user about the no. of adult members
-void promptUserAdultMembers(int *result, int *answer,
-                            int *members)
+void promptUserAdultMembers(int *members)
 {
-  *result = 0;
-  *answer = 0;
+  int result = 0;
+  int answer = 0;
 
   // Ask user the no. of adults
   printf("\nHow many adults(18+ years old): ");
-  *result = scanf("%d", answer);
+  result = scanf("%d", &answer);
 
   // check the input validity
-  while (!(*result) || *answer < 0 || *answer > MAXMEMBERS)
+  while (!(result) || answer < 0 || answer > MAXMEMBERS)
   {
-    if (*answer > MAXMEMBERS)
+    if (answer > MAXMEMBERS)
     {
       printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
       printf("\nHow many adults: ");
-      *result = scanf("%d", answer);
+      result = scanf("%d", &answer);
       break;
     }
 
     puts("Please enter valid input\n");
-    if (!(*result))
-    {
-      char removeBuffer[100];
-      scanf("%s", removeBuffer);
-    }
+    if (!(result))
+      FLUSH;
+
     printf("\nHow many adults: ");
-    *result = scanf("%d", answer);
+    result = scanf("%d", &answer);
   }
 
   // Increment `members` to track the total no. of members
-  *members += *answer;
+  *members += answer;
   return;
 } // promptUserAdultMembers Function
 
 // It prompts the user about each ages for each adult members
-void promptUserAdultAges(int *result, int *answer,
-                         int *members, Database (*datas)[])
+void promptUserAdultAges(int *members, Database (*datas)[])
 {
+  int answer;
+  int result;
   // A loop to track the total prompts of ages
   for (int i = 0; i < *members; i++)
   {
-    *answer = 0;
-    *result = 0;
+    answer = 0;
+    result = 0;
 
     // Ask the user about the current member's age
     printf("\nEnter age: ");
-    *result = scanf("%d", answer);
+    result = scanf("%d", &answer);
 
     // Check the input data validity
-    while (*answer < 18 || !(*result) || *answer > 150)
+    while (answer < 18 || !(result) || answer > 150)
     {
       puts("Please enter valid input");
-      if (!(*result))
-      {
-        char removeBuffer[100];
-        scanf("%s", removeBuffer);
-      }
-      if (*answer < 18 && *result)
+      if (!(result))
+        FLUSH;
+
+      if (answer < 18 && result)
       {
         puts("Warning: Age is too low for adult");
       }
       printf("\nEnter age: ");
-      *result = scanf("%d", answer);
+      result = scanf("%d", &answer);
     }
 
     // Store it in the `datas` array with respect to their indeces
-    (*datas)[i].age = *answer;
+    (*datas)[i].age = answer;
   }
   return;
 } // promptUserAdultAges Function
 
 // It prompts the user about how many children
-void promptUserChildren(int *result, int *answer,
-                        int *members, int *beforeMembers)
+void promptUserChildren(int *answer, int *members,
+                        int *beforeMembers)
 {
   // if the no. of members reach the maximum no. of members
   //   return to the `reserveTicket` function
   if (*members == MAXMEMBERS)
     return;
 
-  *result = 0;
-  *answer = 0;
+  int result = 0;
 
   // Prompt the user about the no. of children
   printf("\nHow many children(17- years old): ");
-  *result = scanf("%d", &*answer);
+  result = scanf("%d", answer);
   int tempTotalMembers = (*members) + *answer;
 
   // check the input data validity
-  while (!(*result) || *answer < 0 || *answer > MAXMEMBERS || tempTotalMembers > MAXMEMBERS)
+  while (!(result) || *answer < 0 || *answer > MAXMEMBERS || tempTotalMembers > MAXMEMBERS)
   {
     if (tempTotalMembers < MAXMEMBERS)
     {
@@ -166,17 +161,15 @@ void promptUserChildren(int *result, int *answer,
     {
       printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
       printf("\nHow many adults: ");
-      *result = scanf("%d", answer);
+      result = scanf("%d", answer);
       break;
     }
     puts("Please enter valid input");
-    if (!(*result))
-    {
-      char removeBuffer[100];
-      scanf("%s", removeBuffer);
-    }
+    if (!(result))
+      FLUSH;
+
     printf("\nHow many adults(17- years old): ");
-    *result = scanf("%d", answer);
+    result = scanf("%d", answer);
   } // while loop
 
   //Track the total no. of members in the current reservation
@@ -186,8 +179,8 @@ void promptUserChildren(int *result, int *answer,
 } // promptUserChildren Function
 
 // It prompts the user about the age for each children members
-void promptUserChildrenAges(int *result, int *answer,
-                            int *members, int *beforeMembers,
+void promptUserChildrenAges(int *answer, int *members,
+                            int *beforeMembers,
                             Database (*datas)[])
 {
   // If the current no. of members reach the maximum no. of reservation members
@@ -196,32 +189,30 @@ void promptUserChildrenAges(int *result, int *answer,
     return;
 
   int totalChild = *answer;
-
+  int result = 0;
   // A loop that prompts the user until it reaches the no. of children members
   for (int i = 0, j = *beforeMembers; i < totalChild; i++, j++)
   {
     *answer = 0;
-    *result = 0;
+    result = 0;
 
     // ask the user about current child's age
     printf("\nEnter age: ");
-    *result = scanf("%d", answer);
+    result = scanf("%d", answer);
 
     // Check the input data validity
-    while (*answer > 17 || !(*result) || *answer < 0)
+    while (*answer > 17 || !(result) || *answer < 0)
     {
       puts("Please enter valid input\n");
-      if (!(*result))
-      {
-        char removeBuffer[100];
-        scanf("%s", removeBuffer);
-      }
+      if (!(result))
+        FLUSH;
+
       if (*answer > 17)
       {
         puts("Warning: Age is too high for children");
       }
       printf("\nEnter age: ");
-      *result = scanf("%d", answer);
+      result = scanf("%d", answer);
     }
     // store the current age in the `datas` array with respect to their indeces
     (*datas)[j].age = *answer;
@@ -331,10 +322,7 @@ void reserveTicket(Information (*arrayCategories)[],
     result = scanf("%d", &answer);
 
     if (!result)
-    {
-      char removeBuffer[100];
-      scanf("%s", removeBuffer);
-    }
+      FLUSH;
   }
 
   if (answer == (*total + 1))
@@ -352,13 +340,13 @@ void reserveTicket(Information (*arrayCategories)[],
   tempPrice = (float)(*arrayCategories)[answer - 1].price;
 
   // Prompt the user about adults no. of members and their ages
-  promptUserAdultMembers(&result, &answer, &members);
-  promptUserAdultAges(&result, &answer, &members, &reservedDATA);
+  promptUserAdultMembers(&members);
+  promptUserAdultAges(&members, &reservedDATA);
 
   int adultMembers;
   // Prompt the user about children no. of members and their ages
-  promptUserChildren(&result, &answer, &members, &adultMembers);
-  promptUserChildrenAges(&result, &answer, &members, &adultMembers, &reservedDATA);
+  promptUserChildren(&answer, &members, &adultMembers);
+  promptUserChildrenAges(&answer, &members, &adultMembers, &reservedDATA);
 
   // Display the total prices with discount
   calculatePrices(&reservedDATA, members, &tempPrice);
@@ -385,7 +373,7 @@ void reserveTicket(Information (*arrayCategories)[],
 
   puts("\nPress any KEY to return to MAIN");
   getch();
-
+  FLUSH;
   // Return to MAIN
   return;
 } // reserveTicket Function

@@ -11,18 +11,13 @@
  */
 
 // this function adds destination in the `destinationFile`
-void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
+void addDest(Information (*arrayCategories)[], int *total, bool hasBuffer)
 {
   system("cls");
 
   //  checks if the buffer has some value
-  if (checkBuffer)
-  {
-    char someBuffer[10];
-    scanf("%s", &someBuffer);
-    checkBuffer = false;
-    printf("\nPlease enter valid input");
-  }
+  if (hasBuffer)
+    FLUSH;
 
   int result;
   char tempDest[50];
@@ -36,28 +31,21 @@ void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
   printf("\nEnter new destination(No space): ");
   result = scanf("%s", tempDest);
   if (!result)
-  {
-    puts("\nPlease Enter valid input");
     return addDest(arrayCategories, total, true);
-  }
 
   result = 0;
 
   // Prompt the user a new ticket price
   printf("\nEnter price ticket(digits only): ");
   result = scanf("%d", &tempPrice);
-  while (!result)
-  {
+  if (!result)
     return addDest(arrayCategories, total, true);
-  }
 
   // Prompt the user a new travel tax
   printf("\nEnter travel tax(digits only): ");
   result = scanf("%d", &tempTax);
   if (!result)
-  {
     return addDest(arrayCategories, total, true);
-  }
 
   // Request the user to proceed
   char answer;
@@ -79,30 +67,20 @@ void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
 
   // Prompt the user for another new record
   if (promptUser("\nAnother record(y/n)?"))
-  {
     return addDest(arrayCategories, total, false);
-  }
   else
-  {
     // Return to Manage Destination menu
     return;
-  }
 
-  return;
 } // addDest Function
 
 // It updates the existing category's price
-void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
+void editDest(Information (*arrayCategories)[], int total, bool hasBuffer)
 {
   system("cls");
   // checks if the buffer has some irrelevant values
-  if (checkBuffer)
-  {
-    char someBuffer[10];
-    scanf("%s", &someBuffer);
-    checkBuffer = false;
-    printf("\nPlease Enter valid input");
-  }
+  if (hasBuffer)
+    FLUSH;
 
   int code;
   int result;
@@ -110,13 +88,10 @@ void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
   printf("\n\nEnter destination code(000 by their index): ");
   result = scanf("%d", &code);
   if (!result)
-  {
     return editDest(arrayCategories, total, true);
-  }
+
   if (code > total || code < 0)
-  {
     return editDest(arrayCategories, total, false);
-  }
 
   int index = code - 1;
   // display the current destination
@@ -127,9 +102,7 @@ void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
   printf("\nEnter new ticket price(digit only): ");
   result = scanf("%d", &newPrice);
   if (!result)
-  {
     return editDest(arrayCategories, total, true);
-  }
 
   // Ask the user to save the changes
   // If yes, then update the current category's price
@@ -151,14 +124,11 @@ void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
 
   // Ask the user for another record
   if (promptUser("\nEdit another record[y/n]?"))
-  {
     return editDest(arrayCategories, total, false);
-  }
   else
-  {
     // Return to Manage Destination menu
     return;
-  }
+
 } // editDest Function
 
 // It removes the existing category and update the arrays
@@ -167,12 +137,7 @@ void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
   system("cls");
   // checks if the buffer has some value
   if (checkBuffer)
-  {
-    char someBuffer[10];
-    scanf("%s", &someBuffer);
-    checkBuffer = false;
-    puts("\nPlease enter valid input ");
-  }
+    FLUSH;
 
   // Prompts the user to enter the dest code
   int code;
@@ -180,13 +145,11 @@ void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
   printf("\n\nEnter destination code(000 by their index): ");
   result = scanf("%d", &code);
   if (!result)
-  {
     return deleteDest(arrayCategories, total, true);
-  }
+
   if (code > *total || code < 0)
-  {
     return deleteDest(arrayCategories, total, false);
-  }
+
   int index = code - 1;
 
   // Displays the selected category's name and price
@@ -230,14 +193,11 @@ void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
 
   // Ask the user to edit another record
   if (promptUser("\nDelete another record[y/n]?"))
-  {
     return deleteDest(arrayCategories, total, false);
-  }
   else
-  {
     // Return to Manage Destination menu
     return;
-  }
+
 } // editDest Function
 
 // Displays the current data in the `reportFile`
@@ -245,7 +205,7 @@ void displayDest(Information (*arrayCategories)[], int total)
 {
   if (total == 0)
   {
-    printf("\nSorry, there's no available flight for right now");
+    printf("\nSorry, there's no available flight right now...");
   }
   else
   {
@@ -271,6 +231,7 @@ void displayDest(Information (*arrayCategories)[], int total)
 void manageDestination(Information (*arrayCategories)[], int *total)
 {
   system("cls");
+  FLUSH;
 
   char menu[5][100] = {
       "Add New Destination",
