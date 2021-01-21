@@ -19,7 +19,6 @@ typedef struct category Category;       // For Destination categories
 typedef struct info Information;        // For database of current program
 typedef struct currentUser CurrentUser; // For current user's info
 typedef struct salesReport SalesReport; // For sales report
-typedef struct files Documents;         // For files
 typedef struct report Report;
 typedef struct totalReport TotalReport;
 
@@ -62,14 +61,6 @@ struct report
   unsigned int quantity;
   float amount;
   float tax;
-};
-
-struct files
-{
-  FILE *getDestinations;
-  FILE *appendTransaction;
-  FILE *salesReport;
-  FILE *reservedData;
 };
 
 struct currentData
