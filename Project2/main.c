@@ -6,6 +6,9 @@
 #include <string.h>
 #include <assert.h>
 
+// Some pre-proccessed codes
+#define FLUSH while (getchar() != '\n')
+
 // This is the file path of the .txt files
 #define destinationsFile "assets/destination.txt"
 #define transactionsFile "assets/historyTransaction.txt"
@@ -20,6 +23,7 @@
 
 // This is our external files
 #include "codes/structs.h"            // Just a collection of structs
+#include "codes/utilities.c"          // some reusable functios
 #include "codes/manageDestinations.c" // 1.] Manage Destination
 #include "codes/reserveTicket.c"      // 2.] Reserve Ticket
 #include "codes/buyTicket.c"          // 3.] Buy Ticket

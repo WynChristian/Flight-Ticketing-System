@@ -1,13 +1,6 @@
 /* 
   This is where manage destination functions
-  
-  The following functions are executed first 
-  before the MAIN program starts:
-  * readAllDest()
-    * scanDest()
-    * recordDest()
-  * initialize()
-  
+
   The following functions are used for 
   managing destinations:
   * manageDestination()
@@ -16,83 +9,6 @@
     * deleteDest()
     * displayDest()
  */
-
-// This function Reads the current data in the `destinationFile`
-// It returns (1 or 0) signifying either true or false
-int scanDest(FILE *file, Category *current, int *total)
-{
-  // Read the file and check if its valid; return number (1 / 0)
-  int result;
-
-  // A pre-loop that checks if the current line is
-  // in the right line to scan the data.
-  while ((result = fscanf(file, "%s %d %d", &current->country, &current->price, &current->tax)) == 1)
-  {
-    // if its not in the right line, recurse (invoke its own function)
-    return scanDest(file, current, total);
-  }
-
-  // Check the result of `fscanf`
-  if (result == EOF)
-  {
-    // if its EOF, then close the file and return 0/false
-    fclose(file);
-    return 0;
-  }
-  else if (result != 3)
-  {
-    // if its invalid, then display error and exit
-    printf("\aError reading data\n");
-    exit(0);
-  }
-  else
-  {
-    // if its valid, then increment the numCategories
-    // and return 1 or true
-    *total += 1;
-    return 1;
-  }
-} // scanDest Function
-
-// it stores the current destination from `scanDest` function
-// in the categories(array of struct)
-void recordDest(Category *category, int index,
-                Information (*categories)[])
-{
-  int i = index - 1;
-
-  // STORE IT in the categories with respect to their index
-  strcpy(((*categories)[i]).country, category->country);
-  (*categories)[i].price = category->price;
-  (*categories)[i].tax = (float)category->tax * 0.01;
-
-  return;
-} // recordDest function
-
-// This function will try to analyze and store
-// the data in `destinationFile` to `categories` array
-void readAllDest(int *total, Information (*categories)[])
-{
-  *total = 0;
-  FILE *file = fopen(destinationsFile, "r");
-  if (!file)
-  {
-    printf("\aError opening %s file\n", destinationsFile);
-    exit(0);
-  }
-
-  int i = 0;
-  Category category;
-  // A loop that calls the previous two function
-  // its job is to keep reading until
-  // either produce error or done scanning
-  while (scanDest(file, &category, total))
-  {
-    recordDest(&category, ++i, categories);
-  }
-
-  return;
-} // readAllDest Function
 
 // this function adds destination in the `destinationFile`
 void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
@@ -145,9 +61,7 @@ void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
 
   // Request the user to proceed
   char answer;
-  printf("\nSAVE this RECORD(y/n)?");
-  answer = getch();
-  if (answer == 'y' || answer == 'Y')
+  if (promptUser("\nSAVE this RECORD(y/n)?"))
   {
     int index = *total;
     // Append the data in the file
@@ -164,13 +78,11 @@ void addDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
   }
 
   // Prompt the user for another new record
-  printf("\nAnother record(y/n)?");
-  answer = getch();
-  if (answer == 'y' || answer == 'Y')
+  if (promptUser("\nAnother record(y/n)?"))
   {
     return addDest(arrayCategories, total, false);
   }
-  else if (answer == 'n' || answer == 'N')
+  else
   {
     // Return to Manage Destination menu
     return;
@@ -219,13 +131,9 @@ void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
     return editDest(arrayCategories, total, true);
   }
 
-  char answer;
   // Ask the user to save the changes
-  puts("SAVE changes[y/n]?");
-  answer = getch();
-
   // If yes, then update the current category's price
-  if (answer == 'y' || answer == 'Y')
+  if (promptUser("\nSAVE changes[y/n]?"))
   {
     // store the new price
     (*arrayCategories)[index].price = newPrice;
@@ -242,13 +150,11 @@ void editDest(Information (*arrayCategories)[], int total, bool checkBuffer)
   }
 
   // Ask the user for another record
-  puts("Edit another record[y/n]?");
-  answer = getch();
-  if (answer == 'y' || answer == 'Y')
+  if (promptUser("\nEdit another record[y/n]?"))
   {
     return editDest(arrayCategories, total, false);
   }
-  else if (answer == 'n' || answer == 'N')
+  else
   {
     // Return to Manage Destination menu
     return;
@@ -288,12 +194,8 @@ void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
   printf("\nDestination price: %d", (*arrayCategories)[index].price);
 
   // Ask the user to proceed to delete the selected category
-  char answer;
-  puts("Are you sure you want to delete this record[y/n]?");
-  answer = getch();
-
   // if yes, then delete the selected category
-  if (answer == 'y' || answer == 'Y')
+  if (promptUser("\nAre you sure you want to delete this record[y/n]?"))
   {
     int totalNum = *total - 1;
     puts("\nDeleting this record...");
@@ -327,13 +229,11 @@ void deleteDest(Information (*arrayCategories)[], int *total, bool checkBuffer)
   }
 
   // Ask the user to edit another record
-  puts("\nDelete another record[y/n]?");
-  answer = getch();
-  if (answer == 'y' || answer == 'Y')
+  if (promptUser("\nDelete another record[y/n]?"))
   {
     return deleteDest(arrayCategories, total, false);
   }
-  else if (answer == 'n' || answer == 'N')
+  else
   {
     // Return to Manage Destination menu
     return;
@@ -423,25 +323,3 @@ void manageDestination(Information (*arrayCategories)[], int *total)
 
   return;
 }
-
-// This function initialize the values of the `arrayCategories` array
-//   and overwrite/create the `fileTransaction` with headers only
-void initialize(Information (*arrayCategories)[],
-                Report (*arrayReports)[], int *total,
-                int *totalCountry)
-{
-  // A loop that gives a first value to each array indeces
-  for (int i = 0; i < *total; i++)
-  {
-    strcpy((*arrayReports)[i].country, (*arrayCategories)[i].country);
-    (*arrayReports)[i].quantity = 0;
-    (*arrayReports)[i].amount = 0;
-    (*arrayReports)[i].tax = 0;
-    *totalCountry += 1;
-  }
-
-  // overwrite the `transactionsFile` with headers only
-  FILE *file = fopen(transactionsFile, "w");
-  fprintf(file, "%-13s %-5s %-14s %s\n\n", "Destination", "Age", "Sales Amount", "Travel Tax");
-  fclose(file);
-} // initialize Function

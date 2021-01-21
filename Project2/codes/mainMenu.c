@@ -6,6 +6,7 @@
     * arrayReports
     * currentNumCategories
  */
+
 void displayMainMenu(Information (*arrayCategories)[],
                      Report (*arrayReports)[],
                      int *currentNumCategories, int *totalCountries)

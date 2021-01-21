@@ -260,48 +260,6 @@ void promptUserTransaction(Information *category,
   return;
 } // promptUserTransaction Function
 
-// It prompts the user to proceed the transaction
-// It returns either 1 / 0; signifying "true" or "false"
-int proceedTransaction(bool checkBuffer)
-{
-  // checks if the buffer has some value
-  if (checkBuffer)
-  {
-    char buffer[100];
-    scanf(" %s", buffer);
-  }
-
-  char choice;
-  int result;
-
-  // Prompt the user to proceed the transaction
-  printf("\nProceed to buy the transaction[y/n]? ");
-  result = scanf(" %c", &choice);
-
-  // Check the input data validity
-  while (!result)
-  {
-    printf("\nPlease enter valid input ");
-    char buffer[100];
-    scanf("%s", buffer);
-
-    printf("\nProceed to buy the transaction[y/n]? ");
-    result = scanf("%d", &choice);
-  }
-
-  // if yes, return 1 (true)
-  if (choice == 'y' || choice == 'Y')
-    return 1;
-  // if no, return 0 (false)
-  else if (choice == 'n' || choice == 'N')
-    return 0;
-  else
-  {
-    printf("\nPlease enter valid input ");
-    return proceedTransaction(true);
-  }
-}
-
 // It appends the current transactions in the `filePath` text file
 void appendTransactionNonReserved(Transactions (*transactionsList)[],
                                   Information *category,
@@ -348,7 +306,7 @@ void updateSalesReportNonReserved(Report (*arrayReports)[],
   return;
 } // updateSalesReportNonReserved Function
 
-// It stores the `transactionList` array's data into `arrayReport` array to track informations
+// It stores the `transactionsList` array's data into `arrayReport` array to track informations
 void storeTransactionData(Report (*arrayReport)[],
                           Information *category, Transactions (*transactionsList)[],
                           int *totalMember, int *totalCountries)
@@ -375,7 +333,7 @@ void storeTransactionData(Report (*arrayReport)[],
     (*arrayReport)[index].tax = 0;
   }
 
-  // Add the transactions in the `transactionFilePath` text file
+  // Add the transactions in the `transactionsFile` text file
   appendTransactionNonReserved(transactionsList,
                                category, totalMember);
 
@@ -415,7 +373,8 @@ void buyNonReservedTicket(Information (*arrayCategories)[],
   puts("FLIGHT DESTINATION\n");
   for (int i = 0; i < *total; i++)
   {
-    printf("%d. %-19s %d.00\n", (i + 1), (*arrayCategories)[i].country, (*arrayCategories)[i].price);
+    printf("%d. %-19s %d.00\n", (i + 1),
+           (*arrayCategories)[i].country, (*arrayCategories)[i].price);
   }
   printf("%d. %s\n", *total + 1, "Return to MAIN");
 
@@ -455,7 +414,7 @@ void buyNonReservedTicket(Information (*arrayCategories)[],
   displayPrice(&transactionList, totalMember);
 
   // Prompt the user to proceed
-  if (proceedTransaction(false))
+  if (promptUser("\nProceed to buy the transaction[y/n]? "))
   {
     // if yes, then update the `transactionFilePath` and `reportFilePath` text files,
     //   and the `arrayReport` array to track the informations
@@ -485,7 +444,7 @@ void appendTransactionReserved(CurrentData *category,
   return;
 } // appendTransactionReserved Function
 
-// It updates the `arrayReport` array to track the data of the current transaction
+// It updates the `arrayReports` array to track the data of the current transaction
 void updateSalesReportReserved(Report (*arrayReports)[], int index,
                                int tax, CurrentOutput *currentoutput,
                                int *totalCountries)
@@ -591,40 +550,6 @@ void storeCodeData(char *filePath,
   return;
 } // storeCodeData Function
 
-// It prompts the user to proceed the payment of reserved ticket
-int proceedPayment(bool checkBuffer)
-{
-  // Check if the buffer has some value
-  if (checkBuffer)
-  {
-    char buffer[100];
-    scanf(" %s", buffer);
-  }
-  char choice;
-  int result;
-  printf("\nProceed to buy Ticket[y/n]? ");
-  result = scanf(" %c", &choice);
-
-  while (!result)
-  {
-    printf("\nPlease enter valid input ");
-    char buffer[100];
-    scanf("%s", buffer);
-
-    printf("\nProceed to buy Ticket[y/n]? ");
-    result = scanf("%d", &choice);
-  }
-  if (choice == 'y' || choice == 'Y')
-    return 1;
-  else if (choice == 'n' || choice == 'N')
-    return 0;
-  else
-  {
-    printf("\nPlease enter valid input ");
-    return proceedPayment(true);
-  }
-}
-
 // This is the "Reserved" category from "Buy Ticket" menu
 // It prompt the user to enter the reservation code,
 //   analyze the code if it exist, then ask the user to
@@ -669,7 +594,7 @@ void buyReservedTicket(Information (*arrayCategories)[],
   }
 
   // Prompt the user to proceed the payment of reserved ticket
-  if (proceedPayment(false))
+  if (promptUser("\nProceed to buy Ticket[y/n]? "))
   {
     // If proceed,
     //    then store the data from `codeFilePath` text file,

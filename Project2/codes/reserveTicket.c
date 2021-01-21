@@ -10,7 +10,7 @@
       * promptUserChildren()
       * promptUserChildrenAges()
       * calculatePrices()
-      * requestReservation()
+      * promptUser()
         * generateRandom()
         * generateFilePath()
         * checkFilePath()
@@ -229,30 +229,6 @@ void promptUserChildrenAges(int *result, int *answer,
   return;
 } // promptUserChildrenAges Function
 
-// It prompts the user to proceed the current reservation
-//    returns 1 or true; signifying true or false
-int requestReservation(void)
-{
-
-  char answer;
-  printf("\nProceed your reservation[y/n]? ");
-  answer = getch();
-
-  if (answer == 'y' || answer == 'Y')
-  {
-    return 1;
-  }
-  else if (answer == 'n' || answer == 'N')
-  {
-    return 0;
-  }
-  else
-  {
-    puts("Please enter valid input");
-    return requestReservation();
-  }
-} // requestReservation Function
-
 // It returns a pseudo-random number with a seed of current time
 int generateRandom(void)
 {
@@ -388,7 +364,7 @@ void reserveTicket(Information (*arrayCategories)[],
   calculatePrices(&reservedDATA, members, &tempPrice);
 
   // Ask the user to proceed the current reservation
-  if (requestReservation())
+  if (promptUser("\nProceed your reservation[y/n]? "))
   {
     char root[100];
     int random;
