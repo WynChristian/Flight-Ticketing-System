@@ -15,12 +15,9 @@
   If you have a pointer to a struct, You have to use the arrow operator (->) to access its fields. 
  */
 
-typedef struct category Category;       // For Destination categories
-typedef struct info Information;        // For database of current program
-typedef struct currentUser CurrentUser; // For current user's info
-typedef struct salesReport SalesReport; // For sales report
+typedef struct category Category; // For Destination categories
+typedef struct info Information;  // For database of current program
 typedef struct report Report;
-typedef struct totalReport TotalReport;
 
 typedef struct currentData CurrentData;
 typedef struct Database CurrentOutput;
@@ -47,12 +44,6 @@ struct currentUser
   int destination;
   int age;
   float payment;
-};
-
-struct totalReport
-{
-  unsigned int totalQuantity;
-  unsigned int totalAmount;
 };
 
 struct report
