@@ -23,7 +23,7 @@
 
 // This is our external files
 #include "codes/structs.h"            // Just a collection of structs
-#include "codes/designs.c"            // Som UI designs
+#include "codes/designs.c"            // Some UI designs
 #include "codes/utilities.c"          // some reusable functios
 #include "codes/manageDestinations.c" // 1.] Manage Destination
 #include "codes/reserveTicket.c"      // 2.] Reserve Ticket
