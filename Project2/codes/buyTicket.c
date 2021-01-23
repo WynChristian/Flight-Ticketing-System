@@ -1,8 +1,8 @@
-/* 
+/*
   This is where `Buy Ticket` category located
-  Its purpose is to track the trasactions and sales report
+  Its purpose is to track the transactions and sales report
 
-  Here is the tree list of the flow of the functions 
+  Here is the tree list of the flow of the functions
   (Take note that I didn't list the functions from other file):
     * buyTicket()
       * buyReservedTicket()
@@ -82,7 +82,7 @@ void promptAdult(int *numMembers)
   int answer = 0;
 
   // Prompt the user about the no. of adults members
-  printf("\nHow many adult/s(18+ y.o)(max: %d): ", MAXTRANSACTION);
+  printf("\n\t\tHow many adult/s(18+ y.o)(max: %d): ", MAXTRANSACTION);
   result = scanf(" %d", &answer);
 
   // Check the input data validity
@@ -90,18 +90,18 @@ void promptAdult(int *numMembers)
   {
     while (answer > MAXTRANSACTION)
     {
-      printf("\nSorry, we can transact for maximum of %d members only per transaction", MAXTRANSACTION);
-      printf("\nHow many adults(max: %d): ", MAXTRANSACTION);
+      printf("\n\t\tSorry, we can transact for maximum of %d members only per transaction", MAXTRANSACTION);
+      printf("\n\t\tHow many adults(max: %d): ", MAXTRANSACTION);
       result = scanf(" %d", &answer);
       break;
     }
-    puts("Please enter valid input\n");
+    puts("\t\tPlease enter valid input\n");
     if (!result)
     {
       char removeBuffer[100];
       scanf("%s", removeBuffer);
     }
-    printf("\nHow many adults(max: %d): ", MAXTRANSACTION);
+    printf("\n\t\tHow many adults(max: %d): ", MAXTRANSACTION);
     result = scanf(" %d", &answer);
   } // while Loop
 
@@ -121,7 +121,7 @@ void promptAdultAges(Transactions (*arrayTransaction)[],
   // A loop to ask the user about the age of each members
   for (int i = 0; i < *numMembers; i++)
   {
-    printf("\nEnter age(18+): ");
+    printf("\n\t\tEnter age(18+): ");
     result = scanf(" %d", &age);
 
     // Check the input data validity
@@ -129,11 +129,11 @@ void promptAdultAges(Transactions (*arrayTransaction)[],
     {
       if (age < 18)
       {
-        printf("\nAge is too low for adult age(18+)");
+        printf("\n\t\tAge is too low for adult age(18+)");
       }
 
-      puts("\nPlease enter valid input\n");
-      printf("\nEnter age(18+): ");
+      puts("\n\t\tPlease enter valid input\n");
+      printf("\n\t\tEnter age(18+): ");
       result = scanf(" %d", &age);
 
       if (!result)
@@ -164,7 +164,7 @@ void promptChildrenAges(Transactions (*arrayTransaction)[],
   // A loop to prompt the user about the current child's age
   for (int i = index; i < *total; i++)
   {
-    printf("\nEnter age(%d or lower): ", maxAge);
+    printf("\n\t\tEnter age(%d or lower): ", maxAge);
     result = scanf(" %d", &age);
 
     // Check the input data validity
@@ -172,10 +172,10 @@ void promptChildrenAges(Transactions (*arrayTransaction)[],
     {
       if (age > 17)
       {
-        printf("\nAge is too high(Must be %d or lower)", maxAge);
+        printf("\n\t\tAge is too high(Must be %d or lower)", maxAge);
       }
-      puts("\nPlease enter valid input\n");
-      printf("\nEnter age(%d or lower): ", maxAge);
+      puts("\n\t\tPlease enter valid input\n");
+      printf("\n\t\tEnter age(%d or lower): ", maxAge);
       result = scanf(" %d", &age);
 
       if (!result)
@@ -209,7 +209,7 @@ void promptChildren(Transactions (*arrayTransaction)[],
   int answer = 0;
 
   // Prompt the user about the no. of children
-  printf("\nHow many children(17-)(max: %d, current %d): ", MAXTRANSACTION, *numMembers);
+  printf("\n\t\tHow many children(17-)(max: %d, current %d): ", MAXTRANSACTION, *numMembers);
   result = scanf(" %d", &answer);
 
   // Check the input data validity
@@ -217,21 +217,21 @@ void promptChildren(Transactions (*arrayTransaction)[],
   {
     while (answer > MAXTRANSACTION - *numMembers)
     {
-      printf("\nSorry, we can transact for maximum of %d members only per transaction", MAXTRANSACTION);
-      printf("\nNo. of available: %d", MAXTRANSACTION - *numMembers);
-      printf("\nHow many children(17-): ");
+      printf("\n\t\tSorry, we can transact for maximum of %d members only per transaction", MAXTRANSACTION);
+      printf("\n\t\tNo. of available: %d", MAXTRANSACTION - *numMembers);
+      printf("\n\t\tHow many children(17-): ");
       result = scanf(" %d", &answer);
       break;
     } // while Loop
 
-    puts("Please enter valid input\n");
+    puts("\t\tPlease enter valid input\n");
     if (!result)
     {
       char removeBuffer[100];
       scanf("%s", removeBuffer);
     }
 
-    printf("\nHow many children(17-): ");
+    printf("\n\t\tHow many children(17-): ");
     result = scanf(" %d", &answer);
   } // while Loop
 
@@ -354,7 +354,7 @@ void displayPrice(Transactions (*transactionList)[], int totalMember)
   }
 
   // then, display the total amount of current transactions
-  printf("\n\nTotal Ticket Price: %.2f", total);
+  printf("\n\n\t\tTotal Ticket Price: %.2f", total);
   return;
 } // displayPrice Function
 
@@ -368,16 +368,18 @@ void buyNonReservedTicket(Information (*arrayCategories)[],
   system("cls");
 
   // Display the current available destinations
-  puts("FLIGHT DESTINATION\n");
+  printAsterisk();
+  puts("\t\tFLIGHT DESTINATION\n");
   for (int i = 0; i < *total; i++)
   {
-    printf("%d. %-19s %d.00\n", (i + 1),
+    printf("\t\t%d. %-19s %d.00\n\n", (i + 1),
            (*arrayCategories)[i].country, (*arrayCategories)[i].price);
   }
-  printf("%d. %s\n", *total + 1, "Return to MAIN");
+  printf("\t\t%d. %s\n", *total + 1, "Return to MAIN\n");
+  printAsterisk();
 
   //Prompt user (Choose categories)
-  printf("Select reserve destination: ");
+  printf("\n\t\tSelect reserve destination: ");
 
   int answer;
   int result;
@@ -386,8 +388,8 @@ void buyNonReservedTicket(Information (*arrayCategories)[],
   // Check the input data validity
   while ((answer - 1) > *total || answer < 0 || !result)
   {
-    puts("Please enter valid input\n");
-    printf("Select reserve destination: ");
+    puts("\t\tPlease enter valid input\n");
+    printf("\t\tSelect reserve destination: ");
     result = scanf("%d", &answer);
 
     if (!result)
@@ -412,7 +414,7 @@ void buyNonReservedTicket(Information (*arrayCategories)[],
   displayPrice(&transactionList, totalMember);
 
   // Prompt the user to proceed
-  if (promptUser("\nProceed to buy the transaction[y/n]? "))
+  if (promptUser("\n\t\tProceed to buy the transaction[y/n]? "))
   {
     // if yes, then update the `transactionFilePath` and `reportFilePath` text files,
     //   and the `arrayReport` array to track the informations
@@ -478,7 +480,7 @@ int scanData(FILE *data, CurrentOutput *currentdata)
   }
   else if (result != 2)
   {
-    printf("\n Error reading data\n");
+    printf("\n \t\tError reading data\n");
     return 0;
   }
   else
@@ -505,7 +507,7 @@ void storeCodeData(char *filePath,
   if (result != 3)
   {
     fclose(file);
-    printf("\nProblem with reading the data");
+    printf("\n\t\tProblem with reading the data");
     return;
   }
 
@@ -585,14 +587,14 @@ void buyReservedTicket(Information (*arrayCategories)[],
   // Check if the current generated file doesn't exists
   if (!checkFilePath(codeFilePath))
   {
-    printf("\nThe Code (%d) doesn't exist", code);
+    printf("\n\t\tThe Code (%d) doesn't exist", code);
     return buyReservedTicket(arrayCategories,
                              totalCountries,
                              arrayReport);
   }
 
   // Prompt the user to proceed the payment of reserved ticket
-  if (promptUser("\nProceed to buy Ticket[y/n]? "))
+  if (promptUser("\n\t\tProceed to buy Ticket[y/n]? "))
   {
     // If proceed,
     //    then store the data from `codeFilePath` text file,
@@ -603,7 +605,7 @@ void buyReservedTicket(Information (*arrayCategories)[],
   }
 
   // Return to "Buy Ticket" menu
-  puts("\nPress any KEY to RETURN");
+  puts("\n\t\tPress any KEY to RETURN");
   char some = getch();
   return;
 } // buyReservedTicket Function
@@ -628,13 +630,15 @@ void buyTicket(Information (*arrayCategories)[],
       "Return to MAIN"};
 
   // Displays the "Buy Ticket" Menu
-  printf("\nBUY TICKET\n");
+  printSlash();
+  printf("\n\t\tBUY TICKET\n");
   for (int i = 0; i < 3; i++)
-    printf("\n%d.] %s", (i + 1), menu[i]);
+    printf("\n\t\t%d.] %s\n\n", (i + 1), menu[i]);
+  printSlash();
 
   char choice;
   // Prompt the user to choose which transaction
-  printf("\n\nEnter your Choice: ");
+  printf("\n\n\t\tEnter your Choice: ");
   result = scanf(" %c", &choice);
 
   // Analyze the `choice`
@@ -660,7 +664,7 @@ void buyTicket(Information (*arrayCategories)[],
     // if '3', then return to MAIN MENU
     return;
   default:
-    puts("Error, invalid input. try again");
+    puts("\t\tError, invalid input. try again");
     buyTicket(arrayCategories, arrayReports,
               total, totalCountries);
   } // switch-case conditions

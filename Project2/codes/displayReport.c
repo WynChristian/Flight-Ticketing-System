@@ -11,14 +11,16 @@ void displaySalesReport(Report (*arrayReport)[], int total)
   else
   {
     // display the current sales report from `arrayReport` array
-    printf("%-14s %-9s %-10s %8s\n\n", "Flight", "Quantity", "Amount", "Trave Tax");
+    printDash();
+    printf("\t\t%-14s %-9s %-10s %8s\n\n", "Flight", "Quantity", "Amount", "Trave Tax");
     for (int i = 0; i < total; i++)
     {
-      printf("%-14s %-9d %-10.2f %.2f\n", (*arrayReport)[i].country,
+      printf("\t\t%-14s %-9d %-10.2f %.2f\n\n", (*arrayReport)[i].country,
              (*arrayReport)[i].quantity, (*arrayReport)[i].amount, (*arrayReport)[i].tax);
     }
+    printDash();
   }
-  puts("Press any key to RETURN");
+  puts("\t\tPress any key to RETURN");
   char some = getch();
   // Return to MAIN
   return;

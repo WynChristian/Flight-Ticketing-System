@@ -15,7 +15,8 @@ void displayMainMenu(Information (*arrayCategories)[],
   system("cls");
 
   // Display the MAIN menu
-  printf("\nFLIGHT RESERVATION SYSTEM\n");
+  printEquals();
+  printf("\n\t\tFLIGHT RESERVATION SYSTEM\n");
   char menu[5][100] = {
       "Manage Destination",
       "Reserve Ticket",
@@ -23,11 +24,12 @@ void displayMainMenu(Information (*arrayCategories)[],
       "Sales Report",
       "EXIT"};
   for (int i = 0; i < 5; i++)
-    printf("\n%d.] %s", (i + 1), menu[i]);
+    printf("\n\t\t%d.] %s\n", (i + 1), menu[i]);
+ printEquals();
 
   // Propmt user to choose
   char choice;
-  printf("\nEnter Choice: ");
+  printf("\n\t\tEnter Choice: ");
   choice = getchar();
 
   // Analyze the `choice` data
@@ -66,7 +68,11 @@ void displayMainMenu(Information (*arrayCategories)[],
                     arrayReports, currentNumCategories,
                     totalCountries);
   case '5':
-    // if 5, stop executing the program
+    // if 5, displays the time and date and stop executing the program
+    system("cls");
+    printSlash();
+    printTime();
+    printSlash();
     exit(0);
   default:
     // if its invalid input, display the error and return to Main

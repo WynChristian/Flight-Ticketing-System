@@ -1,16 +1,16 @@
-/* 
+/*
   some necessary utilities functions
-  
-  The following functions are executed first 
+
+  The following functions are executed first
   before the MAIN program starts:
   * readAllDest()
     * scanDest()
     * recordDest()
   * initialize()
-  
+
   Some function globally used:
   *promptUser()
-  
+
  */
 
 // This function Reads the current data in the `destinationFile`
@@ -96,7 +96,7 @@ void initialize(Information (*arrayCategories)[],
                 Report (*arrayReports)[], int *total,
                 int *totalCountry)
 {
-  // A loop that gives a first value to each array indeces
+  // A loop that gives a first value to each array indexes
   for (int i = 0; i < *total; i++)
   {
     strcpy((*arrayReports)[i].country, (*arrayCategories)[i].country);

@@ -59,7 +59,7 @@ void calculatePrices(Database (*datas)[], int total, float *price)
   }
 
   // Display the total price
-  printf("\nTotal ticket price: %.2f", totalAmounts);
+  printf("\n\t\tTotal ticket price: %.2f", totalAmounts);
   return;
 } // calculatePrices Function
 
@@ -70,7 +70,7 @@ void promptUserAdultMembers(int *members)
   int answer = 0;
 
   // Ask user the no. of adults
-  printf("\nHow many adults(18+ years old): ");
+  printf("\n\t\tHow many adults(18+ years old): ");
   result = scanf("%d", &answer);
 
   // check the input validity
@@ -78,17 +78,17 @@ void promptUserAdultMembers(int *members)
   {
     if (answer > MAXMEMBERS)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
-      printf("\nHow many adults: ");
+      printf("\n\t\tSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
+      printf("\n\t\tHow many adults: ");
       result = scanf("%d", &answer);
       break;
     }
 
-    puts("Please enter valid input\n");
+    puts("\t\tPlease enter valid input\n");
     if (!(result))
       FLUSH;
 
-    printf("\nHow many adults: ");
+    printf("\n\t\tHow many adults: ");
     result = scanf("%d", &answer);
   }
 
@@ -109,21 +109,21 @@ void promptUserAdultAges(int *members, Database (*datas)[])
     result = 0;
 
     // Ask the user about the current member's age
-    printf("\nEnter age: ");
+    printf("\n\t\tEnter age: ");
     result = scanf("%d", &answer);
 
     // Check the input data validity
     while (answer < 18 || !(result) || answer > 150)
     {
-      puts("Please enter valid input");
+      puts("\t\tPlease enter valid input");
       if (!(result))
         FLUSH;
 
       if (answer < 18 && result)
       {
-        puts("Warning: Age is too low for adult");
+        puts("\t\tWarning: Age is too low for adult");
       }
-      printf("\nEnter age: ");
+      printf("\n\t\tEnter age: ");
       result = scanf("%d", &answer);
     }
 
@@ -145,7 +145,7 @@ void promptUserChildren(int *answer, int *members,
   int result = 0;
 
   // Prompt the user about the no. of children
-  printf("\nHow many children(17- years old): ");
+  printf("\n\t\tHow many children(17- years old): ");
   result = scanf("%d", answer);
   int tempTotalMembers = (*members) + *answer;
 
@@ -154,21 +154,21 @@ void promptUserChildren(int *answer, int *members,
   {
     if (tempTotalMembers < MAXMEMBERS)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
-      printf("\nAvailable reservation = %d", MAXMEMBERS - *members);
+      printf("\n\t\tSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
+      printf("\n\t\tAvailable reservation = %d", MAXMEMBERS - *members);
     }
     if (*answer > MAXMEMBERS)
     {
-      printf("\nSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
-      printf("\nHow many adults: ");
+      printf("\n\t\tSorry, we can reserve for maximum of %d members only", MAXMEMBERS);
+      printf("\n\t\tHow many adults: ");
       result = scanf("%d", answer);
       break;
     }
-    puts("Please enter valid input");
+    puts("\t\tPlease enter valid input");
     if (!(result))
       FLUSH;
 
-    printf("\nHow many adults(17- years old): ");
+    printf("\n\t\tHow many adults(17- years old): ");
     result = scanf("%d", answer);
   } // while loop
 
@@ -197,21 +197,21 @@ void promptUserChildrenAges(int *answer, int *members,
     result = 0;
 
     // ask the user about current child's age
-    printf("\nEnter age: ");
+    printf("\n\t\tEnter age: ");
     result = scanf("%d", answer);
 
     // Check the input data validity
     while (*answer > 17 || !(result) || *answer < 0)
     {
-      puts("Please enter valid input\n");
+      puts("\t\tPlease enter valid input\n");
       if (!(result))
         FLUSH;
 
       if (*answer > 17)
       {
-        puts("Warning: Age is too high for children");
+        puts("\t\tWarning: Age is too high for children");
       }
-      printf("\nEnter age: ");
+      printf("\n\t\tEnter age: ");
       result = scanf("%d", answer);
     }
     // store the current age in the `datas` array with respect to their indeces
@@ -300,15 +300,17 @@ void reserveTicket(Information (*arrayCategories)[],
   system("cls");
 
   // Display all the current available destinations
-  puts("FLIGHT DESTINATION\n");
+  printAsterisk();
+  puts("\n\t\tFLIGHT DESTINATION\n");
   for (int i = 0; i < *total; i++)
   {
-    printf("%d %-19s %d.00\n", (i + 1), (*arrayCategories)[i].country, (*arrayCategories)[i].price);
+    printf("\t\t%d %-19s %d.00\n\n", (i + 1), (*arrayCategories)[i].country, (*arrayCategories)[i].price);
   }
-  printf("%d %s\n", *total + 1, "Return to MAIN");
+  printf("\t\t%d %s\n", *total + 1, "Return to MAIN\n");
+  printAsterisk();
 
   //Prompt user to choose which categories
-  printf("Select reserve destination: ");
+  printf("\n\t\tSelect reserve destination: ");
 
   int answer;
   int result;
@@ -317,8 +319,8 @@ void reserveTicket(Information (*arrayCategories)[],
   // Check the input data validity
   while ((answer - 1) > *total || answer < 0 || !result)
   {
-    puts("Please enter valid input\n");
-    printf("Select reserve destination: ");
+    puts("\t\tPlease enter valid input\n");
+    printf("\t\tSelect reserve destination: ");
     result = scanf("%d", &answer);
 
     if (!result)
@@ -352,7 +354,7 @@ void reserveTicket(Information (*arrayCategories)[],
   calculatePrices(&reservedDATA, members, &tempPrice);
 
   // Ask the user to proceed the current reservation
-  if (promptUser("\nProceed your reservation[y/n]? "))
+  if (promptUser("\n\t\tProceed your reservation[y/n]? "))
   {
     char root[100];
     int random;
@@ -365,13 +367,14 @@ void reserveTicket(Information (*arrayCategories)[],
     } while (checkFilePath(root));
 
     // Display the current reservation code
-    printf("\nYour reservation code: \"%d\"", random);
+    printf("\n\t\tYour reservation code: \"%d\"", random);
 
     // Store the data in the current new generate file
     storeData(root, tempCountry, tempTax, &reservedDATA, members);
   }
 
-  puts("\nPress any KEY to return to MAIN");
+  puts("\n\t\tPress any KEY to return to MAIN");
+  printSlash();
   getch();
   FLUSH;
   // Return to MAIN

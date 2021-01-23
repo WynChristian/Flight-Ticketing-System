@@ -1,3 +1,13 @@
+/* This program demonstrates and implements a typical interactive flight ticketing system.
+    Programmed by: Añonuevo, Stphenson
+                   Bisda, Marc Lesther
+                   Cabrera, Jacob Emmanuel
+                   De Vera, George Vincent
+                   Mataya, Glen
+                   Rebanal, Wyn Christian
+    Date: January 23, 2021
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -20,6 +30,8 @@
 #define TOTAL (100)         // size of an arrays
 #define MAXMEMBERS (16)     // For reservation per reservation
 #define MAXTRANSACTION (16) // For non reservation per transaction
+#define DESIGN (70)         // For the design
+#define DESIGN2 (35)        // For the design too
 
 // This is our external files
 #include "codes/structs.h"            // Just a collection of structs

@@ -211,18 +211,20 @@ void displayDest(Information (*arrayCategories)[], int total)
   else
   {
     // Display the header
-    puts("\nList of Destinations");
-    printf("\n%-14s %5s\n\n", "Destination", "Price");
+    printEquals();
+    puts("\n\t\tList of Destinations");
+    printf("\n\t\t%-14s %5s\n\n", "Destination", "Price");
 
     // Display all of the current data
     for (int i = 0; i < total; i++)
     {
-      printf("\n%-14s %d", (*arrayCategories)[i].country, (*arrayCategories)[i].price);
+      printf("\n\t\t%-14s %d\n", (*arrayCategories)[i].country, (*arrayCategories)[i].price);
     }
+    printEquals();
   }
 
   // Return to Manage Destination menu
-  puts("\nPress any key to RETURN");
+  puts("\n\t\tPress any key to RETURN");
   char some = getch();
   return;
 } // displayDest Function
@@ -242,12 +244,14 @@ void manageDestination(Information (*arrayCategories)[], int *total)
       "Return to MAIN"};
 
   // Display the menu
-  printf("\nMANAGE DESTINATION\n\n");
+  printDash();
+  printf("\n\t\tMANAGE DESTINATION\n\n");
   for (int i = 0; i < 5; i++)
-    printf("%d.] %s\n", (i + 1), menu[i]);
+    printf("\t\t%d.] %s\n\n", (i + 1), menu[i]);
+  printDash();
 
   // Prompts the user to choose which category
-  printf("Enter Choice: ");
+  printf("\t\tEnter Choice: ");
 
   char choice;
   choice = getchar();
